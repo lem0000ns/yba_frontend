@@ -43,15 +43,17 @@ const GamesForm = ({ onSubmit }: Props) => {
 
   return (
     <form onSubmit={handleSubmit}>
+      <InputForm
+        inputType="number of games"
+        helperText="determines how many games will be returned"
+        onChange={(value: string) => setLimit(Number(value))}
+      ></InputForm>
+
       <Autocomplete
         possibleValues={allNames}
         text="Enter name (optional)"
         onChange={(value: string) => setNameValue(value)}
       />
-
-      <div>
-        <br />
-      </div>
 
       <MultiSelect
         text="Select a season or range of seasons (optional)"
@@ -69,10 +71,6 @@ const GamesForm = ({ onSubmit }: Props) => {
         onChange={(options: string[]) => setSeasons(options)}
       ></MultiSelect>
 
-      <div>
-        <br />
-      </div>
-
       <Modal
         title="Filter criteria? (optional)"
         enterMessage="Enter filter"
@@ -80,29 +78,22 @@ const GamesForm = ({ onSubmit }: Props) => {
           <Input_Tags
             tags={filters}
             addFilters={(event) => setFilters([...filters, event.target.value])}
+            removeFilters={(indexToRemove) =>
+              setFilters(filters.filter((_, index) => index !== indexToRemove))
+            }
           ></Input_Tags>
         }
       />
 
-      <p>Filter: {filters.join(", ")}</p>
+      {filters.length > 0 && <p>Filter: {filters.join(", ")}</p>}
 
-      <div>
-        <br />
-      </div>
-
-      <InputForm
-        inputType="limit"
-        helperText="determines how many games will be returned"
-        onChange={(value: string) => setLimit(Number(value))}
-      ></InputForm>
-
-      <button type="submit" className="btn btn-primary">
+      <button
+        type="submit"
+        className="btn btn-primary"
+        style={{ marginTop: "20px" }}
+      >
         Submit
       </button>
-
-      <div>
-        <br />
-      </div>
     </form>
   );
 };

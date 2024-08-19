@@ -17,7 +17,7 @@ const MultiSelect = ({ text, options, onChange }: Props) => {
 
   return (
     <div>
-      <h6>{text}</h6>
+      <h6 className="select-team">{text}</h6>
       <select
         className="form-select"
         multiple

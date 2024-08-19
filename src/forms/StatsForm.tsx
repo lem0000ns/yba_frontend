@@ -95,10 +95,6 @@ const StatsForm = ({ onSubmit }: Props) => {
         onChange={(value: string) => setNameValue(value)}
       />
 
-      <div>
-        <br />
-      </div>
-
       <MultiSelect
         text="Select a season or range of seasons (optional)"
         options={[
@@ -115,10 +111,6 @@ const StatsForm = ({ onSubmit }: Props) => {
         onChange={(options: string[]) => setSeasons(options)}
       />
 
-      <div>
-        <br />
-      </div>
-
       <Modal
         title="Filter criteria? (optional)"
         enterMessage="Enter filter"
@@ -126,17 +118,20 @@ const StatsForm = ({ onSubmit }: Props) => {
           <Input_Tags
             tags={filters}
             addFilters={(event) => setFilters([...filters, event.target.value])}
+            removeFilters={(indexToRemove) =>
+              setFilters(filters.filter((_, index) => index !== indexToRemove))
+            }
           ></Input_Tags>
         }
       />
 
-      <p>Filter: {filters.join(", ")}</p>
+      {filters.length > 0 && <p>Filter: {filters.join(", ")}</p>}
 
-      <div>
-        <br />
-      </div>
-
-      <button type="submit" className="btn btn-primary">
+      <button
+        type="submit"
+        className="btn btn-primary"
+        style={{ marginTop: "20px" }}
+      >
         Submit
       </button>
     </form>

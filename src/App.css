@@ -11,6 +11,10 @@
   background-repeat: no-repeat;
 }
 
+.form-select {
+  margin-bottom: 20px
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -168,9 +172,10 @@ td {
 .navbar.navbar-expand-lg.bg-body-tertiary {
   margin-bottom: 10px;
   background-color: #d1d2f0 !important;
-  border-bottom-style: solid;
   border-bottom-width: 3px;
-  border-bottom-color: #283fd7
+  border-bottom-color: #a5deec;
+  border-bottom-style: solid; /* Ensure the border is solid for transition */
+  transition: all 0.3s ease
 }
 
 .input-tags {
@@ -191,7 +196,7 @@ td {
 .input-tags li {
   background-color: #d2fdff; /* Light gray background color */
   border-radius: 12px; /* Makes the tag pill-shaped */
-  padding: 8px 8px; /* Adjust the padding to your liking */
+  padding: 4px 8px; /* Adjust the padding to your liking */
   display: flex;
   align-items: center;
   font-size: 16px; /* Adjust the font size */
@@ -202,15 +207,19 @@ td {
   margin-right: 8px; /* Space between text and any potential close button */
 }
 
-.input-tags li::after {
-  content: '×'; /* Optional: close button character */
-  font-size: 16px;
-  cursor: pointer; /* Makes the close button look clickable */
-  margin-left: 8px;
-  color: #888; /* Color of the close button */
+.delete-filter {
+  font-size: 24px; /* Adjust size as needed */
+  cursor: pointer; /* Change cursor to pointer on hover */
+  color: #ff0000; /* Optional: change color of the X */
+  user-select: none; /* Prevent text selection */
+  margin-bottom: 5px
 }
 
-.input-tags li:hover::after {
-  color: #f00; /* Color of the close button on hover */
+.delete-filter::before {
+  content: '×'; /* Unicode character for the multiplication sign */
+}
+
+.select-team {
+  margin-top: 20px
 }
 

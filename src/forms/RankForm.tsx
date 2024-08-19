@@ -93,6 +93,12 @@ const RankForm = ({ onSubmit }: Props) => {
 
   return (
     <form onSubmit={handleSubmit}>
+      <InputForm
+        inputType="number of players"
+        helperText="determines how many players will be ranked"
+        onChange={(value: string) => setLimit(Number(value))}
+      ></InputForm>
+
       <Dropdown
         text={aggValue}
         color="light"
@@ -132,21 +138,11 @@ const RankForm = ({ onSubmit }: Props) => {
         handleClick={(order: string) => setOrder(order)}
       ></Dropdown>
 
-      <InputForm
-        inputType="limit"
-        helperText="determines how many players will be ranked"
-        onChange={(value: string) => setLimit(Number(value))}
-      ></InputForm>
-
       <Dropdown
         text={team}
         options={teamAbbreviations}
         handleClick={(team: string) => setTeam(team)}
       ></Dropdown>
-
-      <div>
-        <br />
-      </div>
 
       <MultiSelect
         text="Select a season or range of seasons (optional)"
@@ -171,10 +167,6 @@ const RankForm = ({ onSubmit }: Props) => {
         handleClick={(stage: string) => setStage(stage)}
       ></Dropdown>
 
-      <div>
-        <br />
-      </div>
-
       <Modal
         title="Filter criteria? (optional)"
         enterMessage="Enter filter"
@@ -182,17 +174,20 @@ const RankForm = ({ onSubmit }: Props) => {
           <Input_Tags
             tags={filters}
             addFilters={(event) => setFilters([...filters, event.target.value])}
+            removeFilters={(indexToRemove) =>
+              setFilters(filters.filter((_, index) => index !== indexToRemove))
+            }
           ></Input_Tags>
         }
       />
 
-      <p>Filter: {filters.join(", ")}</p>
+      {filters.length > 0 && <p>Filter: {filters.join(", ")}</p>}
 
-      <div>
-        <br />
-      </div>
-
-      <button type="submit" className="btn btn-primary">
+      <button
+        type="submit"
+        className="btn btn-primary"
+        style={{ marginTop: "20px" }}
+      >
         Submit
       </button>
     </form>
