@@ -6,6 +6,7 @@ import InputForm from "./InputForm";
 import MultiSelect from "./MultiSelect";
 import Modal from "./Modal";
 import Navbar from "./Navbar";
+import Input_Tags from "./Input_Tags";
 export {
   Dropdown,
   Table,
@@ -15,4 +16,5 @@ export {
   InputForm,
   Autocomplete,
   Navbar,
+  Input_Tags,
 };

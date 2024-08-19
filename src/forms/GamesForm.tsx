@@ -1,5 +1,11 @@
 import { useState } from "react";
-import { MultiSelect, InputForm, Modal, Autocomplete } from "../components/All";
+import {
+  MultiSelect,
+  InputForm,
+  Modal,
+  Autocomplete,
+  Input_Tags,
+} from "../components/All";
 import { capitalizeName } from "../utilities";
 
 let allNames: string[] = [];
@@ -17,7 +23,7 @@ interface Props {
   onSubmit: (
     name: string,
     seasons: string[],
-    filter: string,
+    filters: string[],
     limit: Number
   ) => void;
 }
@@ -25,14 +31,14 @@ interface Props {
 const GamesForm = ({ onSubmit }: Props) => {
   const [nameValue, setNameValue] = useState("");
   const [seasons, setSeasons] = useState([""]);
-  const [filter, setFilter] = useState("");
+  const [filters, setFilters] = useState<string[]>([]);
   const [limit, setLimit] = useState(-1);
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
     limit == -1
-      ? onSubmit("'Limit' is a required field", [""], "", -1)
-      : onSubmit(nameValue, seasons, filter, limit);
+      ? onSubmit("'Limit' is a required field", [""], [], -1)
+      : onSubmit(nameValue, seasons, filters, limit);
   };
 
   return (
@@ -71,15 +77,14 @@ const GamesForm = ({ onSubmit }: Props) => {
         title="Filter criteria? (optional)"
         enterMessage="Enter filter"
         textBox={
-          <InputForm
-            inputType="filter"
-            helperText="stat1op1x1,stat2op2x2…"
-            onChange={(value: string) => setFilter(value)}
-          ></InputForm>
+          <Input_Tags
+            tags={filters}
+            addFilters={(event) => setFilters([...filters, event.target.value])}
+          ></Input_Tags>
         }
-      ></Modal>
+      />
 
-      <p>Filter: {filter}</p>
+      <p>Filter: {filters.join(", ")}</p>
 
       <div>
         <br />

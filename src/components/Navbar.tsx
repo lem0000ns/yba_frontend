@@ -11,9 +11,6 @@ const Navbar = ({ dropdown, home, onHomeClick }: Props) => {
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
       <div className="container-fluid">
-        <a className="navbar-brand" href="#">
-          Navbar
-        </a>
         <button
           className="navbar-toggler"
           type="button"
@@ -27,20 +24,10 @@ const Navbar = ({ dropdown, home, onHomeClick }: Props) => {
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0 d-flex align-items-center">
-            <li className="nav-item">
+            <li className="nav-item home">
               <Button onClick={onHomeClick} name={home} color="light"></Button>
             </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">
-                Link
-              </a>
-            </li>
             <li className="nav-item dropdown">{dropdown}</li>
-            <li className="nav-item">
-              <a className="nav-link disabled" aria-disabled="true">
-                Disabled
-              </a>
-            </li>
           </ul>
           <form className="d-flex" role="search">
             <input
@@ -49,7 +36,7 @@ const Navbar = ({ dropdown, home, onHomeClick }: Props) => {
               placeholder="Search"
               aria-label="Search"
             ></input>
-            <button className="btn btn-outline-success" type="submit">
+            <button className="btn btn-outline-dark" type="submit">
               Search
             </button>
           </form>

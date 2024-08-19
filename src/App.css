@@ -1,7 +1,6 @@
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
 }
 
@@ -167,15 +166,51 @@ td {
 }
 
 .navbar.navbar-expand-lg.bg-body-tertiary {
-  margin-bottom: 10px
+  margin-bottom: 10px;
+  background-color: #d1d2f0 !important;
+  border-bottom-style: solid;
+  border-bottom-width: 3px;
+  border-bottom-color: #283fd7
 }
 
-ul.navbar-nav.me-auto.mb-2.mb-lg-0.d-flex.align-items-center {
-  padding-top: 0rem; /* Adjust as needed */
-  padding-bottom: 0rem; /* Adjust as needed */
+.input-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px
 }
 
-.nav-item{
-  padding-top: 0rem;  /* Adjust these values */
-  padding-bottom: 0rem;
+.input-tags ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px; /* Adjust the spacing between tags */
 }
+
+.input-tags li {
+  background-color: #d2fdff; /* Light gray background color */
+  border-radius: 12px; /* Makes the tag pill-shaped */
+  padding: 8px 8px; /* Adjust the padding to your liking */
+  display: flex;
+  align-items: center;
+  font-size: 16px; /* Adjust the font size */
+  color: #0a0c72; /* Text color */
+}
+
+.input-tags li span {
+  margin-right: 8px; /* Space between text and any potential close button */
+}
+
+.input-tags li::after {
+  content: '×'; /* Optional: close button character */
+  font-size: 16px;
+  cursor: pointer; /* Makes the close button look clickable */
+  margin-left: 8px;
+  color: #888; /* Color of the close button */
+}
+
+.input-tags li:hover::after {
+  color: #f00; /* Color of the close button on hover */
+}
+

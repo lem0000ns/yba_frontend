@@ -3,7 +3,7 @@ function computeURL(
   stat: string,
   agg: string,
   seasons: string[],
-  filter: string,
+  filters: string[],
   limit: Number,
   order: string,
   team: string,
@@ -26,8 +26,13 @@ function computeURL(
       url += "&season=" + szn;
     }
   }
-  if (filter != "") url += "&filter=" + filter;
-  if (order != "") url += "&order=" + order;
+  if (filters.length > 0) {
+    let tempFilters = filters.join(",");
+    url += "&filter=" + tempFilters;
+  }
+  if (order != "") {
+    order == "Most" ? (url += "&order=desc") : (url += "&order=asc");
+  }
   if (team != "" && team != "Select team (optional)") url += "&team=" + team;
   if (stage != "" && stage != "Select a stage (optional)")
     url += "&stage=" + stage;
@@ -39,7 +44,7 @@ function getStatInfo(
   stat: string,
   agg: string,
   seasons: string[],
-  filter: string,
+  filters: string[],
   team: string,
   limit: Number,
   order: string
@@ -50,7 +55,7 @@ function getStatInfo(
   }
   //rank
   if (order != "") {
-    order == "desc"
+    order == "Most"
       ? (res += "Top " + limit + " players based on ")
       : (res += "Bottom " + limit + " players based on ");
   }
@@ -79,9 +84,8 @@ function getStatInfo(
     res += " in the given seasons";
   }
 
-  if (filter != "") {
+  if (filters.length > 0) {
     res += " where ";
-    let filters = filter.split(",");
     for (let i = 0; i < filters.length; i++) {
       let currFilter = filters[i];
       let foundOp = false;

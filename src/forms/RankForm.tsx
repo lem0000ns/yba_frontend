@@ -1,8 +1,11 @@
 import { useState } from "react";
-import Dropdown from "../components/Dropdown";
-import MultiSelect from "../components/MultiSelect";
-import InputForm from "../components/InputForm";
-import Modal from "../components/Modal";
+import {
+  Dropdown,
+  MultiSelect,
+  InputForm,
+  Modal,
+  Input_Tags,
+} from "../components/All";
 
 let teamAbbreviations = [
   "ATL",
@@ -46,7 +49,7 @@ interface Props {
     team: string,
     seasons: string[],
     stage: string,
-    filter: string
+    filters: string[]
   ) => void;
 }
 
@@ -58,7 +61,7 @@ const RankForm = ({ onSubmit }: Props) => {
   const [team, setTeam] = useState("Select team (optional)");
   const [seasons, setSeasons] = useState([""]);
   const [stage, setStage] = useState("Select a stage (optional)");
-  const [filter, setFilter] = useState("");
+  const [filters, setFilters] = useState<string[]>([]);
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
@@ -74,7 +77,7 @@ const RankForm = ({ onSubmit }: Props) => {
           "",
           [""],
           "",
-          ""
+          []
         )
       : onSubmit(
           aggValue,
@@ -84,7 +87,7 @@ const RankForm = ({ onSubmit }: Props) => {
           team,
           seasons,
           stage,
-          filter
+          filters
         );
   };
 
@@ -125,7 +128,7 @@ const RankForm = ({ onSubmit }: Props) => {
 
       <Dropdown
         text={order}
-        options={["desc", "asc"]}
+        options={["Most", "Least"]}
         handleClick={(order: string) => setOrder(order)}
       ></Dropdown>
 
@@ -176,15 +179,14 @@ const RankForm = ({ onSubmit }: Props) => {
         title="Filter criteria? (optional)"
         enterMessage="Enter filter"
         textBox={
-          <InputForm
-            inputType="filter"
-            helperText="stat1op1x1,stat2op2x2…"
-            onChange={(value: string) => setFilter(value)}
-          ></InputForm>
+          <Input_Tags
+            tags={filters}
+            addFilters={(event) => setFilters([...filters, event.target.value])}
+          ></Input_Tags>
         }
-      ></Modal>
+      />
 
-      <p>Filter: {filter}</p>
+      <p>Filter: {filters.join(", ")}</p>
 
       <div>
         <br />

@@ -1,4 +1,4 @@
-import { Dropdown, Table, Navbar } from "./components/All.tsx";
+import { Dropdown, Table, Navbar, Button } from "./components/All.tsx";
 import { StatsForm, GamesForm, RankForm } from "./forms/All";
 import { useState, useRef } from "react";
 import { computeURL, getStatInfo } from "./utilities.tsx";
@@ -31,29 +31,35 @@ const fields = [
 ];
 
 function App() {
-  const [path, setPath] = useState("Path");
+  const [path, setPath] = useState("Explore");
   const [result, setResult] = useState<any>();
   const [percentile, setPercentile] = useState("");
   const [statInfo, setStatInfo] = useState("");
 
   const [showCurry, setShowCurry] = useState(true);
   const [showPlayer, setShowPlayer] = useState<any>();
-  const [isPlayer, setIsPlayer] = useState(false);
   const [resultVisibility, setResultVisibility] = useState(false);
+  const [pathVisibility, setPathVisibility] = useState(false);
   const [error, setError] = useState("");
 
   const handleClick = (resource: string) => {
-    if (resource == "Where's Curry?") resource = "Path";
+    if (resource == "Where's Curry?") resource = "Explore";
     reset();
     setPath(resource);
-    resource == "Path" ? setShowCurry(true) : setShowCurry(false);
+    if (resource == "Explore") {
+      setShowCurry(true);
+      setPathVisibility(false);
+    } else {
+      setShowCurry(false);
+      setPathVisibility(true);
+    }
   };
 
   const reset = () => {
     setResultVisibility(false);
     setError("");
     setPercentile("");
-    setIsPlayer(false);
+    setShowPlayer(false);
   };
 
   const handleStatsSubmit = (
@@ -61,7 +67,7 @@ function App() {
     stat: string,
     agg: string,
     seasons: string[],
-    filter: string
+    filters: string[]
   ) => {
     if (resultRef.current) {
       resultRef.current.scrollIntoView({ behavior: "smooth" });
@@ -70,7 +76,8 @@ function App() {
       setError(name);
     } else {
       setResultVisibility(false);
-      setIsPlayer(true);
+      setPathVisibility(false);
+      setError("");
       if (name != "") {
         let tempName = name.split(" ").join("-");
 
@@ -80,20 +87,19 @@ function App() {
             alt={`Image of ${tempName}`}
             style={{ width: "20%", height: "auto" }} // Example dimensions
             className="image"
-            onError={() => setIsPlayer(false)}
+            onError={() => setShowPlayer(false)}
           />
         );
         console.log(playerImg);
         setShowPlayer(playerImg);
       }
-      setError("");
       if (stat == "games") agg = "sum";
-      setStatInfo(getStatInfo(name, stat, agg, seasons, filter, "", -1, ""));
+      setStatInfo(getStatInfo(name, stat, agg, seasons, filters, "", -1, ""));
       setResultVisibility(true);
       let url =
         baseURL +
         "stats?" +
-        computeURL(name, stat, agg, seasons, filter, -1, "", "", "");
+        computeURL(name, stat, agg, seasons, filters, -1, "", "", "");
       axios
         .get(url)
         .then((response) => {
@@ -118,7 +124,7 @@ function App() {
   const handleGamesSubmit = (
     name: string,
     seasons: string[],
-    filter: string,
+    filters: string[],
     limit: Number
   ) => {
     if (resultRef.current) {
@@ -128,12 +134,13 @@ function App() {
       setError(name);
     } else {
       if (name != "") setShowPlayer(true);
-      setStatInfo(getStatInfo(name, "", "", seasons, filter, "", limit, ""));
+      setStatInfo(getStatInfo(name, "", "", seasons, filters, "", limit, ""));
       setError("");
+      setPathVisibility(false);
       let url =
         baseURL +
         "games?" +
-        computeURL(name, "", "", seasons, filter, limit, "", "", "");
+        computeURL(name, "", "", seasons, filters, limit, "", "", "");
       axios
         .get(url)
         .then((response) => {
@@ -167,7 +174,7 @@ function App() {
     team: string,
     seasons: string[],
     stage: string,
-    filter: string
+    filters: string[]
   ) => {
     if (resultRef.current) {
       resultRef.current.scrollIntoView({ behavior: "smooth" });
@@ -175,14 +182,15 @@ function App() {
     if (agg == "'Agg', 'Stat', 'Order', and 'Limit' are required fields") {
       setError(agg);
     } else {
+      setPathVisibility(false);
       setStatInfo(
-        getStatInfo("", stat, agg, seasons, filter, team, limit, order)
+        getStatInfo("", stat, agg, seasons, filters, team, limit, order)
       );
       setError("");
       let url =
         baseURL +
         "rank?" +
-        computeURL("", stat, agg, seasons, filter, limit, order, team, stage);
+        computeURL("", stat, agg, seasons, filters, limit, order, team, stage);
       let cols = ["name", agg + "_" + stat];
       axios
         .get(url)
@@ -209,11 +217,6 @@ function App() {
 
   const resultRef = useRef<HTMLDivElement | null>(null);
 
-  const isStats = path === "Stats";
-  const isGames = path === "Games";
-  const isRank = path === "Rank";
-  const pathVisibility = isRank || isGames || isStats;
-
   let pathDropdown = (
     <Dropdown
       text={path}
@@ -237,16 +240,16 @@ function App() {
         </div>
       )}
 
-      {isStats && pathVisibility && (
+      {path == "Stats" && pathVisibility && (
         <StatsForm onSubmit={handleStatsSubmit}></StatsForm>
       )}
-      {isGames && pathVisibility && (
+      {path == "Games" && pathVisibility && (
         <GamesForm onSubmit={handleGamesSubmit}></GamesForm>
       )}
-      {isRank && pathVisibility && (
+      {path == "Rank" && pathVisibility && (
         <RankForm onSubmit={handleRankSubmit}></RankForm>
       )}
-      {resultVisibility && isStats && (
+      {resultVisibility && path == "Stats" && (
         <div className="result">
           <p className="statsInfo" style={{ fontSize: "24px" }}>
             {statInfo}:
@@ -260,7 +263,7 @@ function App() {
           </p>
         </div>
       )}
-      {resultVisibility && isGames && (
+      {resultVisibility && path == "Games" && (
         <div className="result">
           <p ref={resultRef} className="statsInfo" style={{ fontSize: "24px" }}>
             {statInfo}:
@@ -269,16 +272,21 @@ function App() {
           <Table columns={fields} body={result}></Table>
         </div>
       )}
-      {resultVisibility && isRank && (
+      {resultVisibility && path == "Rank" && (
         <div className="result">
           <p ref={resultRef} className="statsInfo" style={{ fontSize: "24px" }}>
             {statInfo}:
           </p>
           <Table columns={["Name", "Stat"]} body={result}></Table>
+          <Button
+            name="Reverse rows"
+            onClick={() => setResult(result.slice().reverse())}
+            color="dark"
+          ></Button>
         </div>
       )}
       {percentile && <div className="percentile">{percentile}</div>}
-      {isPlayer && showPlayer}
+      {showPlayer}
       {error && (
         <div className="alert alert-danger" role="alert">
           {error}
