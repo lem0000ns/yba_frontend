@@ -1,10 +1,11 @@
-import { Dropdown, Table, Navbar, Button } from "./components/All.tsx";
+import { Table, Navbar, Button } from "./components/All.tsx";
 import { StatsForm, GamesForm, RankForm } from "./forms/All";
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { computeURL, getStatInfo } from "./utilities.tsx";
 import axios from "axios";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
-import { curry, Image } from "./content/All";
+import { curry, Image, PlayerInfo } from "./content/All";
+import { Route, Routes, useNavigate } from "react-router-dom";
 
 const baseURL = "https://vojed2b2fk.execute-api.us-west-1.amazonaws.com/dev/";
 
@@ -31,36 +32,24 @@ const fields = [
 ];
 
 function App() {
-  const [path, setPath] = useState("Explore");
   const [result, setResult] = useState<any>();
   const [percentile, setPercentile] = useState("");
   const [statInfo, setStatInfo] = useState("");
-
-  const [showCurry, setShowCurry] = useState(true);
-  const [showPlayer, setShowPlayer] = useState<any>();
-  const [resultVisibility, setResultVisibility] = useState(false);
-  const [pathVisibility, setPathVisibility] = useState(false);
+  const [player, setPlayer] = useState<any>();
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-  const handleClick = (resource: string) => {
-    if (resource == "Where's Curry?") resource = "Explore";
-    reset();
-    setPath(resource);
-    if (resource == "Explore") {
-      setShowCurry(true);
-      setPathVisibility(false);
-    } else {
-      setShowCurry(false);
-      setPathVisibility(true);
-    }
-  };
-
-  const reset = () => {
-    setResultVisibility(false);
-    setError("");
-    setPercentile("");
-    setShowPlayer(false);
-  };
+  function getPlayerImg(name: string) {
+    return (
+      <img
+        src={`https://d2xnnptf2jlna3.cloudfront.net/playerImages/${name}.jpg`}
+        alt={`Image of ${name}`}
+        style={{ width: "20%", height: "auto" }} // Example dimensions
+        className="image"
+        onError={() => setPlayer(false)}
+      />
+    );
+  }
 
   const handleStatsSubmit = (
     name: string,
@@ -69,33 +58,17 @@ function App() {
     seasons: string[],
     filters: string[]
   ) => {
-    if (resultRef.current) {
-      resultRef.current.scrollIntoView({ behavior: "smooth" });
-    }
     if (name == "'Stat' and 'Agg' are required fields") {
       setError(name);
     } else {
-      setResultVisibility(false);
-      setPathVisibility(false);
       setError("");
       if (name != "") {
         let tempName = name.split(" ").join("-");
-
-        let playerImg = (
-          <img
-            src={`https://d2xnnptf2jlna3.cloudfront.net/playerImages/${tempName}.jpg`}
-            alt={`Image of ${tempName}`}
-            style={{ width: "20%", height: "auto" }} // Example dimensions
-            className="image"
-            onError={() => setShowPlayer(false)}
-          />
-        );
-        console.log(playerImg);
-        setShowPlayer(playerImg);
+        let playerImg = getPlayerImg(tempName);
+        setPlayer(playerImg);
       }
       if (stat == "games") agg = "sum";
       setStatInfo(getStatInfo(name, stat, agg, seasons, filters, "", -1, ""));
-      setResultVisibility(true);
       let url =
         baseURL +
         "stats?" +
@@ -113,6 +86,7 @@ function App() {
                 (response.data.percentile * 100).toFixed(3) + " percentile"
               )
             : setPercentile("");
+          navigate("/stats/results");
         })
         .catch((error) => {
           setError("Oh no! An error occurred!");
@@ -127,16 +101,12 @@ function App() {
     filters: string[],
     limit: Number
   ) => {
-    if (resultRef.current) {
-      resultRef.current.scrollIntoView({ behavior: "smooth" });
-    }
     if (name == "'Limit' is a required field") {
       setError(name);
     } else {
-      if (name != "") setShowPlayer(true);
+      if (name != "") setPlayer(true);
       setStatInfo(getStatInfo(name, "", "", seasons, filters, "", limit, ""));
       setError("");
-      setPathVisibility(false);
       let url =
         baseURL +
         "games?" +
@@ -146,18 +116,29 @@ function App() {
         .then((response) => {
           console.log(JSON.stringify(response.data));
           let temp = response.data.games
-            .filter((item: any) => item != "playerID" && item != "gameID")
+            ?.filter((item: any) => item != "playerID" && item != "gameID")
             .map((item: any) => {
               return (
                 <tr key={item.id}>
-                  {fields.map((field: string) => (
-                    <td key={field}>{item[field]}</td>
-                  ))}
+                  {fields.map((field: string) => {
+                    return field == "name" ? (
+                      <td key={field}>
+                        <a
+                          className="table_player_name"
+                          href={`/players/${item[field]}`}
+                        >
+                          {item[field]}
+                        </a>
+                      </td>
+                    ) : (
+                      <td key={field}>{item[field]}</td>
+                    );
+                  })}
                 </tr>
               );
             });
           setResult(temp);
-          setResultVisibility(true);
+          navigate("/games/results");
         })
         .catch((error) => {
           setError("Oh no! There was an error");
@@ -176,13 +157,9 @@ function App() {
     stage: string,
     filters: string[]
   ) => {
-    if (resultRef.current) {
-      resultRef.current.scrollIntoView({ behavior: "smooth" });
-    }
     if (agg == "'Agg', 'Stat', 'Order', and 'Limit' are required fields") {
       setError(agg);
     } else {
-      setPathVisibility(false);
       setStatInfo(
         getStatInfo("", stat, agg, seasons, filters, team, limit, order)
       );
@@ -199,14 +176,25 @@ function App() {
           let temp = response.data.result.map((item: any) => {
             return (
               <tr key={item.id}>
-                {cols.map((value: string) => (
-                  <td key={value}>{item[value]}</td>
-                ))}
+                {cols.map((value: string) => {
+                  return value == "name" ? (
+                    <td key={value}>
+                      <a
+                        className="table_player_name"
+                        href={`/players/${item[value]}`}
+                      >
+                        {item[value]}
+                      </a>
+                    </td>
+                  ) : (
+                    <td key={value}>{item[value]}</td>
+                  );
+                })}
               </tr>
             );
           });
           setResult(temp);
-          setResultVisibility(true);
+          navigate("/rank/results");
         })
         .catch((error) => {
           setError("Oh no! There was an error");
@@ -215,84 +203,86 @@ function App() {
     }
   };
 
-  const resultRef = useRef<HTMLDivElement | null>(null);
-
-  let pathDropdown = (
-    <Dropdown
-      text={path}
-      color="light"
-      options={["Stats", "Games", "Rank"]}
-      handleClick={(resource: string) => handleClick(resource)}
-    ></Dropdown>
-  );
-
   return (
-    <div className="body">
-      <Navbar
-        dropdown={pathDropdown}
-        home="Where's Curry?"
-        onHomeClick={(home: string) => handleClick(home)}
-      ></Navbar>
+    <>
+      <div className="body">
+        <Navbar />
 
-      {showCurry && (
-        <div>
-          <Image source={curry}></Image>
-        </div>
-      )}
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <div>
+                <Image source={curry}></Image>
+              </div>
+            }
+          />
+          <Route
+            path="/stats/results"
+            element={
+              <div className="result">
+                <p className="statsInfo" style={{ fontSize: "24px" }}>
+                  {statInfo}:
+                </p>
+                <p className="statsResult" style={{ fontSize: "36px" }}>
+                  {result}
+                </p>
+                {percentile && <div className="percentile">{percentile}</div>}
+                {player}
+              </div>
+            }
+          />
+          <Route
+            path="/games/results"
+            element={
+              <div className="result">
+                <p className="statsInfo" style={{ fontSize: "24px" }}>
+                  {statInfo}:
+                </p>
+                <Table columns={fields} body={result}></Table>
+              </div>
+            }
+          />
+          <Route
+            path="/rank/results"
+            element={
+              <div className="result">
+                <p className="statsInfo" style={{ fontSize: "24px" }}>
+                  {statInfo}:
+                </p>
+                <Table columns={["Name", "Stat"]} body={result}></Table>
+                <Button
+                  name="Reverse rows"
+                  onClick={() => setResult(result.slice().reverse())}
+                  color="dark"
+                ></Button>
+              </div>
+            }
+          />
+          <Route
+            path="/stats"
+            element={<StatsForm onSubmit={handleStatsSubmit} />}
+          />
+          <Route
+            path="/games"
+            element={<GamesForm onSubmit={handleGamesSubmit} />}
+          />
+          <Route
+            path="/rank"
+            element={<RankForm onSubmit={handleRankSubmit} />}
+          />
+          <Route path="/players/:name" element={<PlayerInfo />} />
+        </Routes>
 
-      {path == "Stats" && pathVisibility && (
-        <StatsForm onSubmit={handleStatsSubmit}></StatsForm>
-      )}
-      {path == "Games" && pathVisibility && (
-        <GamesForm onSubmit={handleGamesSubmit}></GamesForm>
-      )}
-      {path == "Rank" && pathVisibility && (
-        <RankForm onSubmit={handleRankSubmit}></RankForm>
-      )}
-      {resultVisibility && path == "Stats" && (
-        <div className="result">
-          <p className="statsInfo" style={{ fontSize: "24px" }}>
-            {statInfo}:
-          </p>
-          <p
-            ref={resultRef}
-            className="statsResult"
-            style={{ fontSize: "36px" }}
-          >
-            {result}
-          </p>
-        </div>
-      )}
-      {resultVisibility && path == "Games" && (
-        <div className="result">
-          <p ref={resultRef} className="statsInfo" style={{ fontSize: "24px" }}>
-            {statInfo}:
-          </p>
-          {showPlayer}
-          <Table columns={fields} body={result}></Table>
-        </div>
-      )}
-      {resultVisibility && path == "Rank" && (
-        <div className="result">
-          <p ref={resultRef} className="statsInfo" style={{ fontSize: "24px" }}>
-            {statInfo}:
-          </p>
-          <Table columns={["Name", "Stat"]} body={result}></Table>
-          <Button
-            name="Reverse rows"
-            onClick={() => setResult(result.slice().reverse())}
-            color="dark"
-          ></Button>
-        </div>
-      )}
-      {percentile && <div className="percentile">{percentile}</div>}
-      {showPlayer}
-      {error && (
-        <div className="alert alert-danger" role="alert">
-          {error}
-        </div>
-      )}
-    </div>
+        {error && (
+          <div className="alert-container">
+            <div className="alert alert-danger" role="alert">
+              {error}
+            </div>
+          </div>
+        )}
+      </div>
+    </>
   );
 }
 

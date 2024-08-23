@@ -21,7 +21,8 @@ const InputForm = ({ inputType, onChange, helperText }: Props) => {
       </label>
       <input
         type="text"
-        className="form-control"
+        className="form-control "
+        style={{ width: "200px", margin: "0 auto" }}
         id="InputValue"
         aria-describedby="nameHelp"
         value={nameValue}

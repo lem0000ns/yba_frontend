@@ -112,13 +112,4 @@ function getStatInfo(
   return res;
 }
 
-function capitalizeName(name: string) {
-  let words = name.split(" ");
-  let res = "";
-  for (const word of words) {
-    res += word.charAt(0).toUpperCase() + word.slice(1) + " ";
-  }
-  return res.slice(0, -1);
-}
-
-export { computeURL, getStatInfo, capitalizeName };
+export { computeURL, getStatInfo };

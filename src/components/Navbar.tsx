@@ -1,48 +1,54 @@
-import Button from "./Button";
+import { Autocomplete } from "./All";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../App.css";
+import namesList from "../forms/allNames.txt?raw";
 
-interface Props {
-  dropdown: any;
-  home: any;
-  onHomeClick: (path: string) => void;
-}
+const Navbar = () => {
+  const allNames = namesList.split("\n");
+  const [nameValue, setNameValue] = useState("");
+  const navigate = useNavigate();
 
-const Navbar = ({ dropdown, home, onHomeClick }: Props) => {
+  const handleSearch = (e: any) => {
+    console.log(e);
+    nameValue == ""
+      ? navigate("/")
+      : navigate(`/players/${encodeURIComponent(nameValue)}`);
+  };
+
   return (
-    <nav className="navbar navbar-expand-lg bg-body-tertiary">
-      <div className="container-fluid">
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav me-auto mb-2 mb-lg-0 d-flex align-items-center">
-            <li className="nav-item home">
-              <Button onClick={onHomeClick} name={home} color="light"></Button>
-            </li>
-            <li className="nav-item dropdown">{dropdown}</li>
-          </ul>
-          <form className="d-flex" role="search">
-            <input
-              className="form-control me-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            ></input>
-            <button className="btn btn-outline-dark" type="submit">
-              Search
-            </button>
-          </form>
-        </div>
-      </div>
-    </nav>
+    <header>
+      <a href="/">
+        <h1 className="YangBA-header">YangBA</h1>
+      </a>
+      <nav>
+        <ul className="nav_links">
+          <li>
+            <a className="nav_links_items" href="/stats">
+              Stats
+            </a>
+          </li>
+          <li>
+            <a className="nav_links_items" href="/games">
+              Games
+            </a>
+          </li>
+          <li>
+            <a className="nav_links_items" href="/rank">
+              Rank
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <form className="d-flex" role="search" onSubmit={(e) => handleSearch(e)}>
+        <Autocomplete
+          possibleValues={allNames}
+          text=""
+          onChange={(value: string) => setNameValue(value)}
+          className="search-bar"
+        />
+      </form>
+    </header>
   );
 };
 

@@ -12,9 +12,16 @@ interface Props {
   title: string;
   enterMessage: string;
   textBox: JSX.Element;
+  helperText: string;
 }
 
-const Modal = ({ color = "light", title, enterMessage, textBox }: Props) => {
+const Modal = ({
+  color = "light",
+  title,
+  enterMessage,
+  textBox,
+  helperText,
+}: Props) => {
   return (
     <div>
       <button
@@ -50,6 +57,7 @@ const Modal = ({ color = "light", title, enterMessage, textBox }: Props) => {
             {textBox}
 
             <div className="modal-footer">
+              <div className="form-text text-muted">{helperText}</div>
               <button
                 type="button"
                 className="btn btn-secondary"

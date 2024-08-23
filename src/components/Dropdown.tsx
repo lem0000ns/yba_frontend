@@ -1,4 +1,3 @@
-import Button from "./Button";
 import "../App.css";
 
 interface Props {
@@ -22,7 +21,9 @@ const Dropdown = ({ text, color = "light", options, handleClick }: Props) => {
       <ul className="dropdown-menu">
         {options.map((key) => (
           <li key={key}>
-            <Button name={key} color="light" onClick={handleClick} />
+            <div className="dropdown-items" onClick={() => handleClick(key)}>
+              {key}
+            </div>
           </li>
         ))}
       </ul>

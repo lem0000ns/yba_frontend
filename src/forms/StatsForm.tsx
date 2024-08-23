@@ -6,7 +6,7 @@ import {
   Autocomplete,
   Input_Tags,
 } from "../components/All";
-import { capitalizeName } from "../utilities";
+import namesList from "./allNames.txt?raw";
 
 interface Props {
   onSubmit: (
@@ -18,18 +18,8 @@ interface Props {
   ) => void;
 }
 
-let allNames: string[] = [];
-
-async function processNames() {
-  const response = await fetch("names.txt");
-  const namesStr = await response.text();
-  allNames = namesStr.split("\n").map((name: string) => capitalizeName(name));
-  return allNames;
-}
-
-processNames();
-
 const StatsForm = ({ onSubmit }: Props) => {
+  const allNames = namesList.split("\n");
   const [nameValue, setNameValue] = useState("");
   const [statValue, setStatValue] = useState("Select a stat");
   const [aggValue, setAggValue] = useState("Select an aggregate function");
@@ -55,7 +45,7 @@ const StatsForm = ({ onSubmit }: Props) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="path_page" onSubmit={handleSubmit}>
       <Dropdown
         text={statValue}
         color="light"
@@ -123,6 +113,7 @@ const StatsForm = ({ onSubmit }: Props) => {
             }
           ></Input_Tags>
         }
+        helperText="click ',' to enter filter"
       />
 
       {filters.length > 0 && <p>Filter: {filters.join(", ")}</p>}

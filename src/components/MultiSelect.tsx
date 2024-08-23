@@ -16,22 +16,25 @@ const MultiSelect = ({ text, options, onChange }: Props) => {
   };
 
   return (
-    <div>
-      <h6 className="select-team">{text}</h6>
-      <select
-        className="form-select"
-        multiple
-        aria-label="Multiple select functionality"
-        value={selectedOptions}
-        onChange={(e) => handleChange(e.target.selectedOptions)}
-      >
-        {options.map((key) => (
-          <option key={key} value={key}>
-            {key}
-          </option>
-        ))}
-      </select>
-    </div>
+    <>
+      <h6 className="form-select-header">{text}</h6>
+      <div className="form-select-container">
+        <select
+          className="form-select"
+          multiple
+          aria-label="Multiple select functionality"
+          value={selectedOptions}
+          onChange={(e) => handleChange(e.target.selectedOptions)}
+          style={{ width: "300px" }}
+        >
+          {options.map((key) => (
+            <option key={key} value={key}>
+              {key}
+            </option>
+          ))}
+        </select>
+      </div>
+    </>
   );
 };
 

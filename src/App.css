@@ -1,19 +1,30 @@
 #root {
-  max-width: 1280px;
+  max-width: 100%;
   margin: 0 auto;
   text-align: center;
+  background-color:rgb(235, 220, 254);
 }
 
-.body {
-  background-color: #e9f7f6;
-  background-size: contain; /* Adjust the image to cover the entire page */
-  background-position: center;
-  background-repeat: no-repeat;
+* {
+  font-family:'Gill Sans'
+}
+
+/* Multiselect */
+
+.form-select-container {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  width: 100%; /* Ensure container takes full width */
 }
 
 .form-select {
-  margin-bottom: 20px
+  width: 300px; /* Fixed width for select */
+  padding: 10px; /* Optional padding */
+  border-radius: 4px; /* Optional border-radius */
+  border: 1px solid #ccc; /* Optional border */
 }
+
+/*logo*/
 
 .logo {
   height: 6em;
@@ -69,7 +80,7 @@ td {
 }
 
 .content-table thead tr {
-  background-color: #71e9f9fe;
+  background-color: #deb8fffe;
   color: #000000;
   text-align: center;
   font-weight: bold
@@ -81,11 +92,11 @@ td {
 }
 
 .content-table tr:nth-of-type(even):hover {
-  background-color: #bbf0ee
+  background-color: #e0e0ff
 }
 
 .content-table tr:nth-of-type(odd):hover {
-  background-color: #bbf0ee
+  background-color: #e0e0ff
 }
 
 .content-table tbody tr {
@@ -96,86 +107,170 @@ td {
   background-color: #f3f3f3
 }
 
+.content-table tbody tr:nth-of-type(odd) {
+  background-color: #eeedfe
+}
+
 .content-table tbody tr:last-of-type {
-  border-bottom: 2px solid #23bdc5fe
+  border-bottom: 2px solid #7c23c5fe
 }
 
-.dropdown-container {
-  display: flex;
-  flex-direction: column; /* Arrange children in a column */
-  align-items: center;    /* Center children horizontally */
-  margin: 15px;
-}
-
-.dropdown-menu {
-  max-height: 200px;
-  overflow-y: scroll;
-}
 
 .image {
   width: 450px; /* Set the width of the image */
   height: auto; /* Maintain aspect ratio */
-  box-shadow: 0 0 20px rgb(19, 244, 237);
+  box-shadow: 0 0 20px rgb(56, 45, 104);
   margin: 20px;
   padding: 5px;
 }
 
 .autocomplete-wrapper {
-  width: 400px;
+  width: 250px;
   margin: 0 auto;
+  position: relative
 }
 
 .suggestions-list {
-  position: center;
-  top: 100%;
+  position: absolute;
   left: 0;
   right: 0;
   border: 1px solid #ccc;
-  background: white;
+  background: #ecf5fd;
   list-style: none;
   padding: 0;
-  margin: 10px;
-  max-height: 400px;
-  overflow-y: scroll
+  max-height: 200px;
+  overflow-y: auto;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
 .suggestions-list li {
   padding: 8px;
   cursor: pointer;
+  color:rgba(0, 0, 0)
 }
 
 .suggestions-list li:hover {
   background-color: #e9e9e9;
 }
 
-.alert {
-  margin: 10px;
+.search-bar {
+  width: 100%; /* Full width */
+  max-width: 400px; /* Limit maximum width */
+  padding: 8px 8px; /* Add padding for better spacing */
+  border: 1px solid #ccc; /* Border color and thickness */
+  border-radius: 4px; /* Rounded corners */
+  font-size: 16px; /* Increase font size for better readability */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  outline: none; /* Remove default focus outline */
 }
 
+.search-bar:focus {
+  border-color: #e070e6; /* Highlight border color on focus */
+  box-shadow: 0 2px 8px rgba(255, 255, 255, 0.3); /* Enhance shadow on focus */
+}
+
+.alert-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.alert {
+  margin-top: 10px;
+  margin-bottom: 0px !important;
+  height: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  z-index: 999;
+  width: 400px;
+}
+
+/*results*/
+
 .statsInfo {
-  text-shadow: 2px 2px 4px rgba(29, 232, 232, 0.5);
-  background-color: #d2fdff;
+  text-shadow: 2px 2px 4px rgba(138, 69, 178, 0.5);
   margin: 10px;
 }
 
 .statsResult {
-  text-shadow: 2px 2px 4px rgba(29, 232, 232, 0.5);
+  text-shadow: 2px 2px 4px rgba(138, 69, 178, 0.5);
   margin: 10px;
+  font-weight: bold;
+  font-family:'Gill Sans'
 }
 
 .percentile {
   margin: 10px;
   font-weight: bold;
-  text-shadow: 2px 2px 4px rgba(29, 232, 232, 0.5);
+  text-shadow: 2px 2px 4px rgba(138, 69, 178, 0.5);
 }
 
-.navbar.navbar-expand-lg.bg-body-tertiary {
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Navbar decoration */
+
+li, a, button {
+  font-weight: 500;
+  font-size: 16px;
+  text-decoration: none !important
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 5%;
+  background: linear-gradient(35deg, rgb(26, 3, 51), rgb(116, 72, 186));
+  height: 32px;
   margin-bottom: 10px;
-  background-color: #d1d2f0 !important;
-  border-bottom-width: 3px;
-  border-bottom-color: #a5deec;
-  border-bottom-style: solid; /* Ensure the border is solid for transition */
-  transition: all 0.3s ease
+}
+
+
+.YangBA-header {
+  font-weight: bold;
+  color:rgb(250, 250, 250);
+}
+
+.nav_links {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 35px
+}
+
+.nav_links li {
+  display: inline-block;
+  padding: 0px 20px;
+  margin-top: 10px;
+}
+
+.nav_links li a {
+  transition: all 0.3s ease 0s;
+}
+
+.nav_links li a:hover {
+  color: #c4a5e3
+}
+
+.nav_links_items {
+  font-size: 24pt;
+  color: #ffffff
+}
+
+
+/* Other Stuff */
+
+.btn.btn-outline-light {
+  font-weight: bold;
+  height: 10px
 }
 
 .input-tags {
@@ -210,7 +305,7 @@ td {
 .delete-filter {
   font-size: 24px; /* Adjust size as needed */
   cursor: pointer; /* Change cursor to pointer on hover */
-  color: #ff0000; /* Optional: change color of the X */
+  color: #57148b; /* Optional: change color of the X */
   user-select: none; /* Prevent text selection */
   margin-bottom: 5px
 }
@@ -221,5 +316,38 @@ td {
 
 .select-team {
   margin-top: 20px
+}
+
+/* Dropdown stuff */
+
+.dropdown-container {
+  display: inline-block;
+  flex-direction: column; /* Arrange children in a column */
+  align-items: center;    /* Center children horizontally */
+  margin: 15px;
+}
+
+.dropdown-menu {
+  transform: translateX(-50%); /* Adjust for exact centering */
+  display: none; /* Hidden by default */
+  color: rgb(230, 246, 246);
+  max-height: 250px;
+  overflow-y: scroll
+}
+
+.dropdown-items {
+  color: #000000;
+  display: inline-block;
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer
+}
+
+.dropdown-items:hover {
+  background-color: #e9e9e9;
+}
+
+.path_page {
+  background-color: rgb(235, 220, 254)
 }
 

@@ -1,10 +1,12 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   possibleValues: string[];
   helperText?: string;
   text: string;
   onChange: (value: string) => void;
+  className?: string;
 }
 
 const Autocomplete = ({
@@ -12,13 +14,13 @@ const Autocomplete = ({
   helperText,
   text,
   onChange,
+  className = "input",
 }: Props) => {
   const [inputValue, setInputValue] = useState("");
   const [suggestions, setSuggestions] = useState([""]);
-  const [alertVisibility, setAlertVisibility] = useState(false);
+  const navigate = useNavigate();
 
   const handleInputChange = (e: any) => {
-    e.target.value == "" ? setAlertVisibility(false) : setAlertVisibility(true);
     const value = e.target.value;
     setInputValue(value);
     if (value.length > 0) {
@@ -34,10 +36,13 @@ const Autocomplete = ({
   };
 
   const handleSuggestionClick = (suggestion: string) => {
-    setAlertVisibility(false);
     setInputValue(suggestion);
     onChange(suggestion);
     setSuggestions([]);
+    if (className == "search-bar") {
+      navigate(`/players/${suggestion}`);
+      setInputValue("");
+    }
   };
 
   return (
@@ -47,7 +52,8 @@ const Autocomplete = ({
         type="text"
         value={inputValue}
         onChange={handleInputChange}
-        placeholder="type here..."
+        placeholder="Search for a player..."
+        className={className}
       />
       {suggestions.length > 0 && suggestions[0] != "" && (
         <ul className="suggestions-list">
@@ -61,11 +67,6 @@ const Autocomplete = ({
       <div id="nameHelp" className="form-text">
         {helperText}
       </div>
-      {alertVisibility && (
-        <div className="alert alert-danger" role="alert">
-          Click one of listed names
-        </div>
-      )}
     </div>
   );
 };

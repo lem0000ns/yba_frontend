@@ -92,7 +92,7 @@ const RankForm = ({ onSubmit }: Props) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="path_page" onSubmit={handleSubmit}>
       <InputForm
         inputType="number of players"
         helperText="determines how many players will be ranked"
@@ -179,6 +179,7 @@ const RankForm = ({ onSubmit }: Props) => {
             }
           ></Input_Tags>
         }
+        helperText="click ',' to enter filter"
       />
 
       {filters.length > 0 && <p>Filter: {filters.join(", ")}</p>}
