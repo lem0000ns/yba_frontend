@@ -34,7 +34,7 @@ let teamAbbreviations = [
   "PHX",
   "POR",
   "SAC",
-  "SAN",
+  "SAS",
   "TOR",
   "UTA",
   "WAS",

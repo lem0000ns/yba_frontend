@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 interface Props {
   possibleValues: string[];
@@ -18,7 +17,6 @@ const Autocomplete = ({
 }: Props) => {
   const [inputValue, setInputValue] = useState("");
   const [suggestions, setSuggestions] = useState([""]);
-  const navigate = useNavigate();
 
   const handleInputChange = (e: any) => {
     const value = e.target.value;
@@ -40,8 +38,7 @@ const Autocomplete = ({
     onChange(suggestion);
     setSuggestions([]);
     if (className == "search-bar") {
-      navigate(`/players/${suggestion}`);
-      setInputValue("");
+      setInputValue(suggestion);
     }
   };
 

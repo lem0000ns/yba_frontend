@@ -7,6 +7,7 @@ import {
   Input_Tags,
 } from "../components/All";
 import namesList from "./allNames.txt?raw";
+import { antDunk, harden } from "../content/All";
 
 interface Props {
   onSubmit: (
@@ -101,6 +102,8 @@ const StatsForm = ({ onSubmit }: Props) => {
         onChange={(options: string[]) => setSeasons(options)}
       />
 
+      <br />
+
       <Modal
         title="Filter criteria? (optional)"
         enterMessage="Enter filter"
@@ -118,13 +121,17 @@ const StatsForm = ({ onSubmit }: Props) => {
 
       {filters.length > 0 && <p>Filter: {filters.join(", ")}</p>}
 
-      <button
-        type="submit"
-        className="btn btn-primary"
-        style={{ marginTop: "20px" }}
-      >
-        Submit
-      </button>
+      <div className="stats-decoration-container">
+        <img src={harden} alt="..." className="stats-decoration-harden" />
+        <button
+          type="submit"
+          className="btn btn-primary"
+          style={{ marginTop: "20px", marginLeft: "250px" }}
+        >
+          Submit
+        </button>
+        <img src={antDunk} alt="..." className="stats-decoration-ant" />
+      </div>
     </form>
   );
 };

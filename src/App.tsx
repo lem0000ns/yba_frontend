@@ -42,7 +42,7 @@ function App() {
   function getPlayerImg(name: string) {
     return (
       <img
-        src={`https://d2xnnptf2jlna3.cloudfront.net/playerImages/${name}.jpg`}
+        src={`https://d2qd9wn47agcqj.cloudfront.net/allPlayerImages/${name}.jpg`}
         alt={`Image of ${name}`}
         style={{ width: "20%", height: "auto" }} // Example dimensions
         className="image"
@@ -63,7 +63,11 @@ function App() {
     } else {
       setError("");
       if (name != "") {
-        let tempName = name.split(" ").join("-");
+        const tempName = name
+          .replace(/[\s']/g, "")
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .toLowerCase();
         let playerImg = getPlayerImg(tempName);
         setPlayer(playerImg);
       }
@@ -212,7 +216,7 @@ function App() {
           <Route
             path="/"
             element={
-              <div>
+              <div style={{ marginTop: "30px" }}>
                 <Image source={curry}></Image>
               </div>
             }

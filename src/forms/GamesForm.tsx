@@ -61,6 +61,8 @@ const GamesForm = ({ onSubmit }: Props) => {
         onChange={(options: string[]) => setSeasons(options)}
       ></MultiSelect>
 
+      <br />
+
       <Modal
         title="Filter criteria? (optional)"
         enterMessage="Enter filter"
