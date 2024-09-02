@@ -1,4 +1,4 @@
-# YangBA Data Fetcher
+# YangBA Data Fetcher (frontend)
 
 This repository is for the frontend aspect of the YangBA Data Fetcher website, primarily implemented using React + Typescript. When a user first opens the website, there is a home page that introduces each of 3 separate "paths" or tools that the user can choose to query a specific type of stat. Specifically, there is the "Stats," "Games," and "Rank" component that queries a specific stat from an individual player, lists out different statlines that satisfy given criteria, and ranks players based on given criteria, respectively.
 
@@ -6,7 +6,7 @@ There is also a page for example queries in case the user wants to get some insp
 
 ## Tech Stack
 
-FontAwesome, React Router, Bootstrap, React Tooltip, Axios, Google Fonts API
+FontAwesome, React Router, Bootstrap, React Tooltip, Axios, Google Fonts API, NPM
 
 ## Images
 
