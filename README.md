@@ -10,6 +10,12 @@ FontAwesome, React Router, Bootstrap, React Tooltip, Axios, Google Fonts API, NP
 
 ## Images
 
-<img width="1440" alt="Screenshot 2024-09-01 at 6 01 58 PM" src="https://github.com/user-attachments/assets/e6255407-4534-47cf-80a9-7ee9e98297b2">
-<img width="1440" alt="Screenshot 2024-09-01 at 6 02 11 PM" src="https://github.com/user-attachments/assets/283f2fa5-a8f8-49dc-8df1-7e8b978d2b4d">
+### home page, examples page
+
+![ezgif com-speed](https://github.com/user-attachments/assets/d4887e67-1e8a-4042-b95e-bae7596b0a8b)
+
+### example of using "stats" tool to query Stephen Curry's average points per game in 2017 (includes all games)
+
+![ezgif com-speed](https://github.com/user-attachments/assets/75ac120c-e91f-467b-a24e-f89f09085b1f)
+
 <img width="1440" alt="Screenshot 2024-09-01 at 6 02 47 PM" src="https://github.com/user-attachments/assets/0f200fa0-6911-42c7-afde-dce0daa944ae">
