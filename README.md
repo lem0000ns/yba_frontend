@@ -6,7 +6,7 @@ There is also a page for example queries in case the user wants to get some insp
 
 ## Tech Stack
 
-FontAwesome, React Router, Bootstrap, React Tooltip, Axios
+FontAwesome, React Router, Bootstrap, React Tooltip, Axios, Google Fonts API
 
 ## Images
 
