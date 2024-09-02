@@ -29,7 +29,7 @@ const InputForm = ({ inputType, onChange, helperText }: Props) => {
         onChange={(e) => handleChange(e.target.value)}
         placeholder={"type here..."}
       ></input>
-      <div id="nameHelp" className="form-text">
+      <div id="nameHelp" className="form-text" style={{ color: "white" }}>
         {helperText}
       </div>
     </div>

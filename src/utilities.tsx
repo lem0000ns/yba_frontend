@@ -34,8 +34,11 @@ function computeURL(
     order == "Most" ? (url += "&order=desc") : (url += "&order=asc");
   }
   if (team != "" && team != "Select team (optional)") url += "&team=" + team;
-  if (stage != "" && stage != "Select a stage (optional)")
-    url += "&stage=" + stage;
+  if (stage != "" && stage != "Select a stage (optional)") {
+    if (stage == "Preseason") url += "&stage=1";
+    else if (stage == "Regular season") url += "&stage=2";
+    else url += "&stage=3&stage=4&stage=5";
+  }
   return url;
 }
 
@@ -47,7 +50,8 @@ function getStatInfo(
   filters: string[],
   team: string,
   limit: Number,
-  order: string
+  order: string,
+  stage: string
 ) {
   let res = "";
   if (name != "") {
@@ -107,6 +111,10 @@ function getStatInfo(
       res += `${currStat} ${op} ${num}, `;
     }
     res = res.slice(0, -2);
+  }
+
+  if (stage != "" && stage != "Select a stage (optional)") {
+    res += ` during the ${stage.toLowerCase()}`;
   }
 
   return res;

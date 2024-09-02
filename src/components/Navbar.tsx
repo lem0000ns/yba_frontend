@@ -2,7 +2,7 @@ import { Autocomplete } from "./All";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../App.css";
-import namesList from "../forms/allNames.txt?raw";
+import namesList from "../pages/allNames.txt?raw";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { Tooltip } from "react-tooltip";
@@ -60,6 +60,7 @@ const Navbar = () => {
         <Tooltip
           id="my-tooltip-inline"
           style={{ backgroundColor: "rgb(179, 255, 179)", color: "#111" }}
+          place="bottom"
         />
       </nav>
       <form className="d-flex" role="search" onSubmit={(e) => handleSearch(e)}>

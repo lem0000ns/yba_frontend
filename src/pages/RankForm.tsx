@@ -1,0 +1,208 @@
+import { useState } from "react";
+import {
+  Dropdown,
+  MultiSelect,
+  InputForm,
+  Modal,
+  Input_Tags,
+} from "../components/All";
+
+let teamAbbreviations = [
+  "ATL",
+  "BOS",
+  "BKN",
+  "CHA",
+  "CHI",
+  "CLE",
+  "DAL",
+  "DEN",
+  "DET",
+  "GSW",
+  "HOU",
+  "IND",
+  "LAC",
+  "LAL",
+  "MEM",
+  "MIA",
+  "MIL",
+  "MIN",
+  "NOP",
+  "NYK",
+  "OKC",
+  "ORL",
+  "PHI",
+  "PHX",
+  "POR",
+  "SAC",
+  "SAS",
+  "TOR",
+  "UTA",
+  "WAS",
+];
+
+interface Props {
+  onSubmit: (
+    agg: string,
+    stat: string,
+    order: string,
+    limit: Number,
+    team: string,
+    seasons: string[],
+    stage: string,
+    filters: string[]
+  ) => void;
+}
+
+const RankForm = ({ onSubmit }: Props) => {
+  const [aggValue, setAggValue] = useState("Select an aggregate function");
+  const [statValue, setStatValue] = useState("Select a stat");
+  const [order, setOrder] = useState("Select order");
+  const [limit, setLimit] = useState(-1);
+  const [team, setTeam] = useState("Select team (optional)");
+  const [seasons, setSeasons] = useState([""]);
+  const [stage, setStage] = useState("Select a stage (optional)");
+  const [filters, setFilters] = useState<string[]>([]);
+  const [error, setError] = useState("");
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    aggValue == "Select an aggregate function" ||
+    statValue == "Select a stat" ||
+    order == "Select order" ||
+    limit == -1
+      ? setError("'Agg', 'Stat', 'Order', and 'Limit' are required fields")
+      : onSubmit(
+          aggValue,
+          statValue,
+          order,
+          limit,
+          team,
+          seasons,
+          stage,
+          filters
+        );
+  };
+
+  return (
+    <section className="rank-background">
+      <form className="path_page" onSubmit={handleSubmit}>
+        <InputForm
+          inputType="number of players"
+          helperText="determines how many players will be ranked"
+          onChange={(value: string) => setLimit(Number(value))}
+        ></InputForm>
+
+        <div className="rank-dropdowns1">
+          <Dropdown
+            text={aggValue}
+            color="light"
+            options={["sum", "avg", "max", "min"]}
+            handleClick={(name: string) => setAggValue(name)}
+          ></Dropdown>
+
+          <Dropdown
+            text={statValue}
+            color="light"
+            options={[
+              "points",
+              "fgm",
+              "fga",
+              "ftm",
+              "fta",
+              "3pm",
+              "3pa",
+              "3pct",
+              "fgpct",
+              "ftpct",
+              "ast",
+              "reb",
+              "steals",
+              "blocks",
+              "turnovers",
+              "min",
+              "OPI",
+              "games",
+            ]}
+            handleClick={(stat: string) => setStatValue(stat)}
+          ></Dropdown>
+        </div>
+
+        <div className="rank-dropdowns2">
+          <Dropdown
+            text={order}
+            options={["Most", "Least"]}
+            handleClick={(order: string) => setOrder(order)}
+          ></Dropdown>
+
+          <Dropdown
+            text={team}
+            options={teamAbbreviations}
+            handleClick={(team: string) => setTeam(team)}
+          ></Dropdown>
+        </div>
+
+        <MultiSelect
+          text="Select a season or range of seasons (optional)"
+          options={[
+            "2015",
+            "2016",
+            "2017",
+            "2018",
+            "2019",
+            "2020",
+            "2021",
+            "2022",
+            "2023",
+          ]}
+          onChange={(options: string[]) => setSeasons(options)}
+        ></MultiSelect>
+
+        <Dropdown
+          text={stage}
+          color="light"
+          options={["Preseason", "Regular Season", "Playoffs"]}
+          handleClick={(stage: string) => setStage(stage)}
+        ></Dropdown>
+
+        <Modal
+          title="Filter criteria? (optional)"
+          enterMessage="Enter filter"
+          textBox={
+            <Input_Tags
+              tags={filters}
+              addFilters={(event) =>
+                setFilters([...filters, event.target.value])
+              }
+              removeFilters={(indexToRemove) =>
+                setFilters(
+                  filters.filter((_, index) => index !== indexToRemove)
+                )
+              }
+            ></Input_Tags>
+          }
+          helperText="click ',' to enter filter"
+        />
+
+        {filters.length > 0 && <p>Filter: {filters.join(", ")}</p>}
+
+        <button
+          type="submit"
+          className="btn btn-primary"
+          style={{ marginTop: "20px" }}
+        >
+          Submit
+        </button>
+
+        {error && (
+          <div className="alert-container" style={{ marginBottom: "100px" }}>
+            <div className="alert alert-danger" role="alert">
+              {error}
+            </div>
+          </div>
+        )}
+      </form>
+    </section>
+  );
+};
+
+export default RankForm;

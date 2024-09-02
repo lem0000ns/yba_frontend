@@ -1,10 +1,16 @@
 import { Table, Navbar, Button } from "./components/All.tsx";
-import { StatsForm, GamesForm, RankForm } from "./forms/All";
+import {
+  StatsForm,
+  GamesForm,
+  RankForm,
+  HomePage,
+  ExamplePage,
+} from "./pages/All.tsx";
 import { useState } from "react";
 import { computeURL, getStatInfo } from "./utilities.tsx";
 import axios from "axios";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
-import { curry, Image, PlayerInfo } from "./content/All";
+import { PlayerInfo } from "./content/All";
 import { Route, Routes, useNavigate } from "react-router-dom";
 
 const baseURL = "https://vojed2b2fk.execute-api.us-west-1.amazonaws.com/dev/";
@@ -36,7 +42,6 @@ function App() {
   const [percentile, setPercentile] = useState("");
   const [statInfo, setStatInfo] = useState("");
   const [player, setPlayer] = useState<any>();
-  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   function getPlayerImg(name: string) {
@@ -58,45 +63,39 @@ function App() {
     seasons: string[],
     filters: string[]
   ) => {
-    if (name == "'Stat' and 'Agg' are required fields") {
-      setError(name);
-    } else {
-      setError("");
-      if (name != "") {
-        const tempName = name
-          .replace(/[\s']/g, "")
-          .normalize("NFD")
-          .replace(/[\u0300-\u036f]/g, "")
-          .toLowerCase();
-        let playerImg = getPlayerImg(tempName);
-        setPlayer(playerImg);
-      }
-      if (stat == "games") agg = "sum";
-      setStatInfo(getStatInfo(name, stat, agg, seasons, filters, "", -1, ""));
-      let url =
-        baseURL +
-        "stats?" +
-        computeURL(name, stat, agg, seasons, filters, -1, "", "", "");
-      axios
-        .get(url)
-        .then((response) => {
-          console.log(response.data);
-          Number.isInteger(response.data[agg + "_" + stat])
-            ? setResult(response.data[agg + "_" + stat])
-            : setResult(response.data[agg + "_" + stat].toFixed(3));
-
-          response.data.percentile != 0
-            ? setPercentile(
-                (response.data.percentile * 100).toFixed(3) + " percentile"
-              )
-            : setPercentile("");
-          navigate("/stats/results");
-        })
-        .catch((error) => {
-          setError("Oh no! An error occurred!");
-          console.error("there was an error: " + error);
-        });
+    if (name != "") {
+      const tempName = name
+        .replace(/[\s']/g, "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase();
+      let playerImg = getPlayerImg(tempName);
+      setPlayer(playerImg);
     }
+    if (stat == "games") agg = "sum";
+    setStatInfo(getStatInfo(name, stat, agg, seasons, filters, "", -1, "", ""));
+    let url =
+      baseURL +
+      "stats?" +
+      computeURL(name, stat, agg, seasons, filters, -1, "", "", "");
+    axios
+      .get(url)
+      .then((response) => {
+        console.log(response.data);
+        Number.isInteger(response.data[agg + "_" + stat])
+          ? setResult(response.data[agg + "_" + stat])
+          : setResult(response.data[agg + "_" + stat].toFixed(3));
+
+        response.data.percentile != 0
+          ? setPercentile(
+              (response.data.percentile * 100).toFixed(3) + " percentile"
+            )
+          : setPercentile("");
+        navigate("/stats/results");
+      })
+      .catch((error) => {
+        console.error("there was an error: " + error);
+      });
   };
 
   const handleGamesSubmit = (
@@ -105,50 +104,44 @@ function App() {
     filters: string[],
     limit: Number
   ) => {
-    if (name == "'Limit' is a required field") {
-      setError(name);
-    } else {
-      if (name != "") setPlayer(true);
-      setStatInfo(getStatInfo(name, "", "", seasons, filters, "", limit, ""));
-      setError("");
-      let url =
-        baseURL +
-        "games?" +
-        computeURL(name, "", "", seasons, filters, limit, "", "", "");
-      axios
-        .get(url)
-        .then((response) => {
-          console.log(JSON.stringify(response.data));
-          let temp = response.data.games
-            ?.filter((item: any) => item != "playerID" && item != "gameID")
-            .map((item: any) => {
-              return (
-                <tr key={item.id}>
-                  {fields.map((field: string) => {
-                    return field == "name" ? (
-                      <td key={field}>
-                        <a
-                          className="table_player_name"
-                          href={`/players/${item[field]}`}
-                        >
-                          {item[field]}
-                        </a>
-                      </td>
-                    ) : (
-                      <td key={field}>{item[field]}</td>
-                    );
-                  })}
-                </tr>
-              );
-            });
-          setResult(temp);
-          navigate("/games/results");
-        })
-        .catch((error) => {
-          setError("Oh no! There was an error");
-          console.error("there was an error: " + error);
-        });
-    }
+    if (name != "") setPlayer(true);
+    setStatInfo(getStatInfo(name, "", "", seasons, filters, "", limit, "", ""));
+    let url =
+      baseURL +
+      "games?" +
+      computeURL(name, "", "", seasons, filters, limit, "", "", "");
+    axios
+      .get(url)
+      .then((response) => {
+        console.log(JSON.stringify(response.data));
+        let temp = response.data.games
+          ?.filter((item: any) => item != "playerID" && item != "gameID")
+          .map((item: any) => {
+            return (
+              <tr key={item.id}>
+                {fields.map((field: string) => {
+                  return field == "name" ? (
+                    <td key={field}>
+                      <a
+                        className="table_player_name"
+                        href={`/players/${item[field]}`}
+                      >
+                        {item[field]}
+                      </a>
+                    </td>
+                  ) : (
+                    <td key={field}>{item[field]}</td>
+                  );
+                })}
+              </tr>
+            );
+          });
+        setResult(temp);
+        navigate("/games/results");
+      })
+      .catch((error) => {
+        console.error("there was an error: " + error);
+      });
   };
 
   const handleRankSubmit = (
@@ -161,50 +154,44 @@ function App() {
     stage: string,
     filters: string[]
   ) => {
-    if (agg == "'Agg', 'Stat', 'Order', and 'Limit' are required fields") {
-      setError(agg);
-    } else {
-      setStatInfo(
-        getStatInfo("", stat, agg, seasons, filters, team, limit, order)
-      );
-      setError("");
-      let url =
-        baseURL +
-        "rank?" +
-        computeURL("", stat, agg, seasons, filters, limit, order, team, stage);
-      let cols = ["name", agg + "_" + stat];
-      axios
-        .get(url)
-        .then((response) => {
-          console.log(JSON.stringify(response.data));
-          let temp = response.data.result.map((item: any) => {
-            return (
-              <tr key={item.id}>
-                {cols.map((value: string) => {
-                  return value == "name" ? (
-                    <td key={value}>
-                      <a
-                        className="table_player_name"
-                        href={`/players/${item[value]}`}
-                      >
-                        {item[value]}
-                      </a>
-                    </td>
-                  ) : (
-                    <td key={value}>{item[value]}</td>
-                  );
-                })}
-              </tr>
-            );
-          });
-          setResult(temp);
-          navigate("/rank/results");
-        })
-        .catch((error) => {
-          setError("Oh no! There was an error");
-          console.error("there was an error: " + error);
+    setStatInfo(
+      getStatInfo("", stat, agg, seasons, filters, team, limit, order, stage)
+    );
+    let url =
+      baseURL +
+      "rank?" +
+      computeURL("", stat, agg, seasons, filters, limit, order, team, stage);
+    let cols = ["name", agg + "_" + stat];
+    axios
+      .get(url)
+      .then((response) => {
+        console.log(JSON.stringify(response.data));
+        let temp = response.data.result.map((item: any) => {
+          return (
+            <tr key={item.id}>
+              {cols.map((value: string) => {
+                return value == "name" ? (
+                  <td key={value}>
+                    <a
+                      className="table_player_name"
+                      href={`/players/${item[value]}`}
+                    >
+                      {item[value]}
+                    </a>
+                  </td>
+                ) : (
+                  <td key={value}>{item[value]}</td>
+                );
+              })}
+            </tr>
+          );
         });
-    }
+        setResult(temp);
+        navigate("/rank/results");
+      })
+      .catch((error) => {
+        console.error("there was an error: " + error);
+      });
   };
 
   return (
@@ -213,14 +200,8 @@ function App() {
         <Navbar />
 
         <Routes>
-          <Route
-            path="/"
-            element={
-              <div style={{ marginTop: "30px" }}>
-                <Image source={curry}></Image>
-              </div>
-            }
-          />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/examples" element={<ExamplePage />} />
           <Route
             path="/stats/results"
             element={
@@ -277,14 +258,6 @@ function App() {
           />
           <Route path="/players/:name" element={<PlayerInfo />} />
         </Routes>
-
-        {error && (
-          <div className="alert-container">
-            <div className="alert alert-danger" role="alert">
-              {error}
-            </div>
-          </div>
-        )}
       </div>
     </>
   );

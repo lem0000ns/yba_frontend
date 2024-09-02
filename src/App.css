@@ -1,16 +1,28 @@
+@import url(./HomePage.css);
+
 #root {
   max-width: 100%;
   margin: 0 auto;
   text-align: center;
-  background-color:rgb(235, 220, 254);
-}
-
-html {
-  background-color:rgb(235, 220, 254);
+  /*background-color:rgb(235, 220, 254);*/
 }
 
 * {
   font-family:'Gill Sans'
+}
+
+html {
+  overflow: hidden;
+  height: 100%;
+}
+
+body {
+  overflow: auto;
+  height: 100%;
+  background-image: url("./content/images/curry_france.webp");
+  background-size: cover;
+  background-attachment: fixed;
+  box-shadow: inset 0 0 0 2000px rgba(0, 0, 0, 0.8);
 }
 
 /* Multiselect */
@@ -150,8 +162,8 @@ td {
   width: 400px;
   height: auto;
   object-fit: cover;
-  box-shadow: 1px -1px 3px rgb(104, 11, 185);
-  padding: 5px
+  box-shadow: 1px -1px 3px rgb(181, 117, 237);
+  padding: 5px;
 }
 
 .autocomplete-wrapper {
@@ -205,21 +217,24 @@ td {
 /*results*/
 
 .statsInfo {
-  text-shadow: 2px 2px 4px rgba(138, 69, 178, 0.5);
+  text-shadow: 2px 2px 4px rgb(36, 4, 74);
   margin: 10px;
+  color: rgb(190, 118, 248)
 }
 
 .statsResult {
-  text-shadow: 2px 2px 4px rgba(138, 69, 178, 0.5);
+  text-shadow: 2px 2px 4px rgba(138, 69, 178, 1);
   margin: 10px;
   font-weight: bold;
-  font-family:'Gill Sans'
+  font-family:'Gill Sans';
+  color: rgb(190, 118, 248)
 }
 
 .percentile {
   margin: 10px;
   font-weight: bold;
   text-shadow: 2px 2px 4px rgba(138, 69, 178, 0.5);
+  color: rgb(190, 118, 248)
 }
 
 * {
@@ -243,7 +258,6 @@ header {
   padding: 40px;
   background: linear-gradient(35deg, rgb(26, 3, 51), rgb(116, 72, 186));
   height: 32px;
-  margin-bottom: 50px;
 }
 
 
@@ -373,7 +387,10 @@ header {
 }
 
 .path_page {
-  background-color: rgb(235, 220, 254);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white !important;
 }
 
 /* Player profile */
@@ -381,6 +398,8 @@ header {
 .player-profile-container {
   margin-left: 80px;
   margin-right: 80px;
+  margin-top: 20px;
+  color: white
 }
 
 .player-profile-basicInfo {
@@ -398,7 +417,7 @@ header {
 }
 
 .player-profile-label {
-  color: #7c08bf;
+  color: #c368f8;
   margin-top: 15px;
 }
 
@@ -408,23 +427,59 @@ header {
   align-items: center;
 }
 
-/* stats page images */
-
-.stats-decoration-container {
+/* path page */
+.path_page {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  margin-top: 5vh;
 }
 
-.stats-decoration-ant {
-  margin-top: -300px;
-  margin-right: 100px
+/* stats background */
+.stats-background {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  height: 100vh;
+  background-image: url("./content/images/curry_giannis.png");
+  background-size: cover;
+  box-shadow: inset 0 0 0 2000px rgba(0, 0, 0, 0.7)
 }
 
-.stats-decoration-harden {
-  margin-top: -300px;
-  width: 30%;
-  height: auto
+/* rank background */
+.rank-background {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  height: 100vh;
+  background-image: url("./content/images/lebron_mj.png");
+  background-size: cover;
+  box-shadow: inset 0 0 0 2000px rgba(0, 0, 0, 0.7)
+}
+
+.rank-dropdowns1 {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+}
+
+.rank-dropdowns2 {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+}
+
+/* games background */
+.games-background {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  height: 100vh;
+  background-image: url("./content/images/dame_gw.jpg");
+  background-size: cover;
+  box-shadow: inset 0 0 0 2000px rgba(0, 0, 0, 0.7)
 }
 
 /* navbar search */
