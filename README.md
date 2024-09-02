@@ -18,4 +18,6 @@ FontAwesome, React Router, Bootstrap, React Tooltip, Axios, Google Fonts API, NP
 
 ![ezgif com-speed](https://github.com/user-attachments/assets/75ac120c-e91f-467b-a24e-f89f09085b1f)
 
-<img width="1440" alt="Screenshot 2024-09-01 at 6 02 47 PM" src="https://github.com/user-attachments/assets/0f200fa0-6911-42c7-afde-dce0daa944ae">
+### player profile for Immanuel Quickley
+
+![ezgif com-speed (1)](https://github.com/user-attachments/assets/2d7d2ae2-93eb-4a96-a804-f6069406e4e5)
