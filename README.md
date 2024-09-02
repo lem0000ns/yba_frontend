@@ -1,50 +1,15 @@
-# React + TypeScript + Vite
+# YangBA Data Fetcher
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This repository is for the frontend aspect of the YangBA Data Fetcher website, primarily implemented using React + Typescript. When a user first opens the website, there is a home page that introduces each of 3 separate "paths" or tools that the user can choose to query a specific type of stat. Specifically, there is the "Stats," "Games," and "Rank" component that queries a specific stat from an individual player, lists out different statlines that satisfy given criteria, and ranks players based on given criteria, respectively.
 
-Currently, two official plugins are available:
+There is also a page for example queries in case the user wants to get some inspiration or have a clearer understanding of what the project entails. Furthermore, there is an option to search for different players on the navbar, resulting in a unique player profile. The layout has a purple + dark blue theme, with a dark image in the background of each page for visual effects as well.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Tech Stack
 
-## Expanding the ESLint configuration
+FontAwesome, React Router, Bootstrap, React Tooltip, Axios
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Images
 
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+<img width="1440" alt="Screenshot 2024-09-01 at 6 01 58 PM" src="https://github.com/user-attachments/assets/e6255407-4534-47cf-80a9-7ee9e98297b2">
+<img width="1440" alt="Screenshot 2024-09-01 at 6 02 11 PM" src="https://github.com/user-attachments/assets/283f2fa5-a8f8-49dc-8df1-7e8b978d2b4d">
+<img width="1440" alt="Screenshot 2024-09-01 at 6 02 47 PM" src="https://github.com/user-attachments/assets/0f200fa0-6911-42c7-afde-dce0daa944ae">
