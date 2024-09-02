@@ -4,6 +4,8 @@ This repository is for the frontend aspect of the YangBA Data Fetcher website, p
 
 There is also a page for example queries in case the user wants to get some inspiration or have a clearer understanding of what the project entails. Furthermore, there is an option to search for different players on the navbar, resulting in a unique player profile. The layout has a purple + dark blue theme, with a dark image in the background of each page for visual effects as well.
 
+Backend can be found here --> https://github.com/lem0000ns/yba_backend
+
 ## Tech Stack
 
 FontAwesome, React Router, Bootstrap, React Tooltip, Axios, Google Fonts API, NPM
