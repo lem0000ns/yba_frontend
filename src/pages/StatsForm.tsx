@@ -5,6 +5,7 @@ import {
   Modal,
   Autocomplete,
   Input_Tags,
+  OPIModal,
 } from "../components/All";
 import namesList from "./allNames.txt?raw";
 
@@ -145,6 +146,8 @@ const StatsForm = ({ onSubmit }: Props) => {
             </div>
           </div>
         )}
+
+        <OPIModal />
       </form>
     </section>
   );

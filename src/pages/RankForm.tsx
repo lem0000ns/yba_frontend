@@ -5,6 +5,7 @@ import {
   InputForm,
   Modal,
   Input_Tags,
+  OPIModal,
 } from "../components/All";
 
 let teamAbbreviations = [
@@ -213,6 +214,7 @@ const RankForm = ({ onSubmit }: Props) => {
             </div>
           </div>
         )}
+        <OPIModal />
       </form>
     </section>
   );

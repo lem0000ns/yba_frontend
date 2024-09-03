@@ -446,6 +446,19 @@ header {
   box-shadow: inset 0 0 0 2000px rgba(0, 0, 0, 0.7)
 }
 
+.opimodal {
+  position: absolute;
+  bottom: 0px;
+  right: 20px;
+  padding: 10px;
+}
+
+.opimodal:hover {
+  cursor: pointer;
+  color: rgb(181, 117, 237);
+  transition: 0.3s all ease
+}
+
 /* rank background */
 .rank-background {
   display: flex;

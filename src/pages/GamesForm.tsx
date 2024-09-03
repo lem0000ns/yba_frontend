@@ -5,6 +5,7 @@ import {
   Modal,
   Autocomplete,
   Input_Tags,
+  OPIModal,
 } from "../components/All";
 import namesList from "./allNames.txt?raw";
 
@@ -105,6 +106,7 @@ const GamesForm = ({ onSubmit }: Props) => {
             </div>
           </div>
         )}
+        <OPIModal />
       </form>
     </section>
   );
