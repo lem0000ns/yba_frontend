@@ -65,7 +65,7 @@ function getStatInfo(
   }
   //games
   else if (stat == "") {
-    res += limit + " games ";
+    res += limit == 1 ? " game " : " games ";
   }
   //rank or stats
   if (stat != "") {
