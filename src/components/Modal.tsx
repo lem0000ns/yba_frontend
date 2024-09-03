@@ -12,7 +12,7 @@ interface Props {
   title: string;
   enterMessage: string;
   textBox: JSX.Element;
-  helperText: string;
+  helperText: string[];
 }
 
 const Modal = ({
@@ -61,7 +61,24 @@ const Modal = ({
             {textBox}
 
             <div className="modal-footer">
-              <div className="form-text text-muted">{helperText}</div>
+              <div
+                className="form-text text-muted"
+                style={{ textAlign: "left" }}
+              >
+                <p style={{ color: "purple", marginLeft: "20px" }}>
+                  FORMAT: {"{"}stat{"}"}
+                  {"{"}op{"}"}
+                  {"{"}num{"}"} e.g. points{">"}30
+                </p>
+                <ul>
+                  {helperText.map((value: string) => {
+                    return <li>{value}</li>;
+                  })}
+                </ul>
+                <p style={{ color: "purple", marginLeft: "20px" }}>
+                  click ',' to add filter
+                </p>
+              </div>
               <button
                 type="button"
                 className="btn btn-secondary"

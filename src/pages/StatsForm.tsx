@@ -121,7 +121,11 @@ const StatsForm = ({ onSubmit }: Props) => {
               }
             ></Input_Tags>
           }
-          helperText="click ',' to enter filter"
+          helperText={[
+            "stats: points, fgm, fga, ftm, fta, 3pm, 3pa, 3pct, fgpct, ftpct, ast, reb, steals, blocks, turnovers, min, OPI, stage",
+            "op: >, <, =",
+            "'num' guidelines: use decimal for percents, stage = (1: preseason, 2: regular season, 3-5: playoffs)",
+          ]}
         />
 
         {filters.length > 0 && <p>Filter: {filters.join(", ")}</p>}

@@ -70,7 +70,9 @@ const RankForm = ({ onSubmit }: Props) => {
     statValue == "Select a stat" ||
     order == "Select order" ||
     limit == -1
-      ? setError("'Agg', 'Stat', 'Order', and 'Limit' are required fields")
+      ? setError(
+          "'Number of players', 'Agg', 'Stat', and 'Order' are required fields"
+        )
       : onSubmit(
           aggValue,
           statValue,
@@ -180,7 +182,11 @@ const RankForm = ({ onSubmit }: Props) => {
               }
             ></Input_Tags>
           }
-          helperText="click ',' to enter filter"
+          helperText={[
+            "stats: points, fgm, fga, ftm, fta, 3pm, 3pa, 3pct, fgpct, ftpct, ast, reb, steals, blocks, turnovers, min, OPI, games",
+            "op: >, <, =",
+            "'num' guidelines: use percent for decimal",
+          ]}
         />
 
         {filters.length > 0 && <p>Filter: {filters.join(", ")}</p>}
@@ -194,8 +200,15 @@ const RankForm = ({ onSubmit }: Props) => {
         </button>
 
         {error && (
-          <div className="alert-container" style={{ marginBottom: "100px" }}>
-            <div className="alert alert-danger" role="alert">
+          <div
+            className="alert-container"
+            style={{ marginTop: "10px", marginBottom: "100px" }}
+          >
+            <div
+              className="alert alert-danger"
+              style={{ width: "450px" }}
+              role="alert"
+            >
               {error}
             </div>
           </div>

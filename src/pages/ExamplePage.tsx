@@ -138,7 +138,7 @@ const ExamplePage = () => {
         <br />
       </div>
 
-      <h3 className="specific-examples">More specific... (but interesting!)</h3>
+      <h3 className="specific-examples">More specific...</h3>
       <div className="specific-examples-container">
         <Example
           id="example6"
