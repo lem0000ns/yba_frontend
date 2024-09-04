@@ -21,7 +21,7 @@ interface Props {
 const GamesForm = ({ onSubmit }: Props) => {
   const allNames = namesList.split("\n");
   const [nameValue, setNameValue] = useState("");
-  const [seasons, setSeasons] = useState([""]);
+  const [seasons, setSeasons] = useState<string[]>([]);
   const [filters, setFilters] = useState<string[]>([]);
   const [limit, setLimit] = useState(-1);
   const [error, setError] = useState("");

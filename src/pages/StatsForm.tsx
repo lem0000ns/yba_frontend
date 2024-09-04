@@ -24,7 +24,7 @@ const StatsForm = ({ onSubmit }: Props) => {
   const [nameValue, setNameValue] = useState("");
   const [statValue, setStatValue] = useState("Select a stat");
   const [aggValue, setAggValue] = useState("Select an aggregate function");
-  const [seasons, setSeasons] = useState([""]);
+  const [seasons, setSeasons] = useState<string[]>([]);
   const [filters, setFilters] = useState<string[]>([]);
   const [error, setError] = useState("");
 

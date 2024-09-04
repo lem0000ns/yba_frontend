@@ -60,7 +60,7 @@ const RankForm = ({ onSubmit }: Props) => {
   const [order, setOrder] = useState("Select order");
   const [limit, setLimit] = useState(-1);
   const [team, setTeam] = useState("Select team (optional)");
-  const [seasons, setSeasons] = useState([""]);
+  const [seasons, setSeasons] = useState<string[]>([]);
   const [stage, setStage] = useState("Select a stage (optional)");
   const [filters, setFilters] = useState<string[]>([]);
   const [error, setError] = useState("");

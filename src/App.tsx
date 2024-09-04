@@ -1,60 +1,18 @@
-import { Table, Navbar, Button } from "./components/All.tsx";
+import { Navbar } from "./components/All.tsx";
 import {
   StatsForm,
   GamesForm,
   RankForm,
   HomePage,
   ExamplePage,
+  ResultsPage,
 } from "./pages/All.tsx";
-import { useState } from "react";
-import { computeURL, getStatInfo } from "./utilities.tsx";
-import axios from "axios";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { PlayerInfo } from "./content/All";
 import { Route, Routes, useNavigate } from "react-router-dom";
 
-const baseURL = "https://vojed2b2fk.execute-api.us-west-1.amazonaws.com/dev/";
-
-const fields = [
-  "name",
-  "stage",
-  "gameDate",
-  "team",
-  "season",
-  "points",
-  "min",
-  "fgm",
-  "fga",
-  "3pm",
-  "3pa",
-  "ftm",
-  "fta",
-  "reb",
-  "ast",
-  "steals",
-  "blocks",
-  "turnovers",
-  "OPI",
-];
-
 function App() {
-  const [result, setResult] = useState<any>();
-  const [percentile, setPercentile] = useState("");
-  const [statInfo, setStatInfo] = useState("");
-  const [player, setPlayer] = useState<any>();
   const navigate = useNavigate();
-
-  function getPlayerImg(name: string) {
-    return (
-      <img
-        src={`https://d2qd9wn47agcqj.cloudfront.net/allPlayerImages/${name}.jpg`}
-        alt={`Image of ${name}`}
-        style={{ width: "20%", height: "auto" }} // Example dimensions
-        className="image"
-        onError={() => setPlayer(false)}
-      />
-    );
-  }
 
   const handleStatsSubmit = (
     name: string,
@@ -63,39 +21,12 @@ function App() {
     seasons: string[],
     filters: string[]
   ) => {
-    if (name != "") {
-      const tempName = name
-        .replace(/[\s']/g, "")
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
-        .toLowerCase();
-      let playerImg = getPlayerImg(tempName);
-      setPlayer(playerImg);
-    }
-    if (stat == "games") agg = "sum";
-    setStatInfo(getStatInfo(name, stat, agg, seasons, filters, "", -1, "", ""));
-    let url =
-      baseURL +
-      "stats?" +
-      computeURL(name, stat, agg, seasons, filters, -1, "", "", "");
-    axios
-      .get(url)
-      .then((response) => {
-        console.log(response.data);
-        Number.isInteger(response.data[agg + "_" + stat])
-          ? setResult(response.data[agg + "_" + stat])
-          : setResult(response.data[agg + "_" + stat].toFixed(3));
-
-        response.data.percentile != 0
-          ? setPercentile(
-              (response.data.percentile * 100).toFixed(3) + " percentile"
-            )
-          : setPercentile("");
-        navigate("/stats/results");
-      })
-      .catch((error) => {
-        console.error("there was an error: " + error);
-      });
+    if (name == "") name = "na";
+    let seasons_string = seasons.length == 0 ? "na" : seasons.join("-");
+    let filters_string = filters.length == 0 ? "na" : filters.join("-");
+    navigate(
+      `/stats/results/${name}/${seasons_string}/${filters_string}/na/${stat}/${agg}/na/na/na`
+    );
   };
 
   const handleGamesSubmit = (
@@ -104,44 +35,12 @@ function App() {
     filters: string[],
     limit: Number
   ) => {
-    if (name != "") setPlayer(true);
-    setStatInfo(getStatInfo(name, "", "", seasons, filters, "", limit, "", ""));
-    let url =
-      baseURL +
-      "games?" +
-      computeURL(name, "", "", seasons, filters, limit, "", "", "");
-    axios
-      .get(url)
-      .then((response) => {
-        console.log(JSON.stringify(response.data));
-        let temp = response.data.games
-          ?.filter((item: any) => item != "playerID" && item != "gameID")
-          .map((item: any) => {
-            return (
-              <tr key={item.id}>
-                {fields.map((field: string) => {
-                  return field == "name" ? (
-                    <td key={field}>
-                      <a
-                        className="table_player_name"
-                        href={`/players/${item[field]}`}
-                      >
-                        {item[field]}
-                      </a>
-                    </td>
-                  ) : (
-                    <td key={field}>{item[field]}</td>
-                  );
-                })}
-              </tr>
-            );
-          });
-        setResult(temp);
-        navigate("/games/results");
-      })
-      .catch((error) => {
-        console.error("there was an error: " + error);
-      });
+    if (name == "") name = "na";
+    let seasons_string = seasons.length == 0 ? "na" : seasons.join("-");
+    let filters_string = filters.length == 0 ? "na" : filters.join("-");
+    navigate(
+      `/games/results/${name}/${seasons_string}/${filters_string}/${limit}`
+    );
   };
 
   const handleRankSubmit = (
@@ -154,44 +53,13 @@ function App() {
     stage: string,
     filters: string[]
   ) => {
-    setStatInfo(
-      getStatInfo("", stat, agg, seasons, filters, team, limit, order, stage)
+    let seasons_string = seasons.length == 0 ? "na" : seasons.join("-");
+    let filters_string = filters.length == 0 ? "na" : filters.join("-");
+    if (team == "") team = "na";
+    if (stage == "") stage = "na";
+    navigate(
+      `/rank/results/na/${seasons_string}/${filters_string}/${limit}/${stat}/${agg}/${order}/${team}/${stage}`
     );
-    let url =
-      baseURL +
-      "rank?" +
-      computeURL("", stat, agg, seasons, filters, limit, order, team, stage);
-    let cols = ["name", agg + "_" + stat];
-    axios
-      .get(url)
-      .then((response) => {
-        console.log(JSON.stringify(response.data));
-        let temp = response.data.result.map((item: any) => {
-          return (
-            <tr key={item.id}>
-              {cols.map((value: string) => {
-                return value == "name" ? (
-                  <td key={value}>
-                    <a
-                      className="table_player_name"
-                      href={`/players/${item[value]}`}
-                    >
-                      {item[value]}
-                    </a>
-                  </td>
-                ) : (
-                  <td key={value}>{item[value]}</td>
-                );
-              })}
-            </tr>
-          );
-        });
-        setResult(temp);
-        navigate("/rank/results");
-      })
-      .catch((error) => {
-        console.error("there was an error: " + error);
-      });
   };
 
   return (
@@ -202,33 +70,21 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/examples" element={<ExamplePage />} />
+
           <Route
-            path="/stats/results"
-            element={
-              <div className="result">
-                <p className="statsInfo" style={{ fontSize: "24px" }}>
-                  {statInfo}:
-                </p>
-                <p className="statsResult" style={{ fontSize: "36px" }}>
-                  {result}
-                </p>
-                {percentile && <div className="percentile">{percentile}</div>}
-                {player}
-              </div>
-            }
+            path="/stats/results/:name?/:seasons?/:filters?/:limit?/:stat?/:agg?/:order?/:team?/:stage?"
+            element={<ResultsPage path="stats" />}
           />
           <Route
-            path="/games/results"
-            element={
-              <div className="result">
-                <p className="statsInfo" style={{ fontSize: "24px" }}>
-                  {statInfo}:
-                </p>
-                <Table columns={fields} body={result}></Table>
-              </div>
-            }
+            path="/games/results/:name?/:seasons?/:filters?/:limit?/:stat?/:agg?/:order?/:team?/:stage?"
+            element={<ResultsPage path="games" />}
           />
           <Route
+            path="/rank/results/:name?/:seasons?/:filters?/:limit?/:stat?/:agg?/:order?/:team?/:stage?"
+            element={<ResultsPage path="rank" />}
+          />
+
+          {/* <Route
             path="/rank/results"
             element={
               <div className="result">
@@ -243,7 +99,7 @@ function App() {
                 ></Button>
               </div>
             }
-          />
+          /> */}
           <Route
             path="/stats"
             element={<StatsForm onSubmit={handleStatsSubmit} />}

@@ -36,7 +36,7 @@ function computeURL(
   if (team != "" && team != "Select team (optional)") url += "&team=" + team;
   if (stage != "" && stage != "Select a stage (optional)") {
     if (stage == "Preseason") url += "&stage=1";
-    else if (stage == "Regular season") url += "&stage=2";
+    else if (stage == "Regular Season") url += "&stage=2";
     else url += "&stage=3&stage=4&stage=5";
   }
   return url;
