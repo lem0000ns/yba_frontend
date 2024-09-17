@@ -232,7 +232,7 @@ const ResultsPage = ({ path }: Props) => {
   }
 
   if (path === "stats") {
-    if (!result || !statInfo || !percentile) {
+    if (!result || !statInfo) {
       return (
         <div style={{ color: "white", marginTop: "200px", fontSize: "36px" }}>
           Loading...
