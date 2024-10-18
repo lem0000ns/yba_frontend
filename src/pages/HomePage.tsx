@@ -13,11 +13,11 @@ const HomePage = () => {
       <div className="homepage-title">
         <h1 style={{ fontWeight: "bold" }}>You've made it to the YangBA!</h1>
         <h2 style={{ opacity: "0.6" }}>
-          Begin by choosing one of the three tools
+          Begin by choosing one of the three paths above
         </h2>
       </div>
       <div style={{ marginTop: "100px" }}>
-        <h2 style={{ opacity: "0.8" }}>What do these mean?</h2>
+        <h2 style={{ opacity: "0.8" }}>Learn More:</h2>
       </div>
       <div className="homepage-accordion">
         <Accordion />

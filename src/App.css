@@ -393,6 +393,21 @@ header {
   color: white !important;
 }
 
+.OPI-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center
+}
+
+.OPI-info:hover {
+  cursor: pointer
+}
+
+.OPI-modal {
+  filter: blur(5px);
+  transition: filter 0.3s ease;
+}
+
 /* Player profile */
 
 .player-profile-container {
@@ -444,13 +459,6 @@ header {
   background-image: url("./content/images/curry_giannis.png");
   background-size: cover;
   box-shadow: inset 0 0 0 2000px rgba(0, 0, 0, 0.7)
-}
-
-.opimodal {
-  position: absolute;
-  bottom: 0px;
-  right: 20px;
-  padding: 10px;
 }
 
 .opimodal:hover {

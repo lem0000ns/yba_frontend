@@ -22,8 +22,8 @@ function App() {
     filters: string[]
   ) => {
     if (name == "") name = "na";
-    let seasons_string = seasons.length == 0 ? "na" : seasons.join("-");
-    let filters_string = filters.length == 0 ? "na" : filters.join("-");
+    const seasons_string = seasons.length == 0 ? "na" : seasons.join("-");
+    const filters_string = filters.length == 0 ? "na" : filters.join("-");
     navigate(
       `/stats/results/${name}/${seasons_string}/${filters_string}/na/${stat}/${agg}/na/na/na`
     );
@@ -33,11 +33,11 @@ function App() {
     name: string,
     seasons: string[],
     filters: string[],
-    limit: Number
+    limit: number
   ) => {
     if (name == "") name = "na";
-    let seasons_string = seasons.length == 0 ? "na" : seasons.join("-");
-    let filters_string = filters.length == 0 ? "na" : filters.join("-");
+    const seasons_string = seasons.length == 0 ? "na" : seasons.join("-");
+    const filters_string = filters.length == 0 ? "na" : filters.join("-");
     navigate(
       `/games/results/${name}/${seasons_string}/${filters_string}/${limit}`
     );
@@ -47,14 +47,14 @@ function App() {
     agg: string,
     stat: string,
     order: string,
-    limit: Number,
+    limit: number,
     team: string,
     seasons: string[],
     stage: string,
     filters: string[]
   ) => {
-    let seasons_string = seasons.length == 0 ? "na" : seasons.join("-");
-    let filters_string = filters.length == 0 ? "na" : filters.join("-");
+    const seasons_string = seasons.length == 0 ? "na" : seasons.join("-");
+    const filters_string = filters.length == 0 ? "na" : filters.join("-");
     if (team == "") team = "na";
     if (stage == "") stage = "na";
     navigate(
@@ -83,23 +83,6 @@ function App() {
             path="/rank/results/:name?/:seasons?/:filters?/:limit?/:stat?/:agg?/:order?/:team?/:stage?"
             element={<ResultsPage path="rank" />}
           />
-
-          {/* <Route
-            path="/rank/results"
-            element={
-              <div className="result">
-                <p className="statsInfo" style={{ fontSize: "24px" }}>
-                  {statInfo}:
-                </p>
-                <Table columns={["Name", "Stat"]} body={result}></Table>
-                <Button
-                  name="Reverse rows"
-                  onClick={() => setResult(result.slice().reverse())}
-                  color="dark"
-                ></Button>
-              </div>
-            }
-          /> */}
           <Route
             path="/stats"
             element={<StatsForm onSubmit={handleStatsSubmit} />}

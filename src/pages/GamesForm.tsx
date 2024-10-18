@@ -5,7 +5,6 @@ import {
   Modal,
   Autocomplete,
   Input_Tags,
-  OPIModal,
 } from "../components/All";
 import namesList from "./allNames.txt?raw";
 
@@ -14,7 +13,7 @@ interface Props {
     name: string,
     seasons: string[],
     filters: string[],
-    limit: Number
+    limit: number
   ) => void;
 }
 
@@ -51,7 +50,6 @@ const GamesForm = ({ onSubmit }: Props) => {
         <MultiSelect
           text="Select a season or range of seasons (optional)"
           options={[
-            "2015",
             "2016",
             "2017",
             "2018",
@@ -60,6 +58,7 @@ const GamesForm = ({ onSubmit }: Props) => {
             "2021",
             "2022",
             "2023",
+            "2024",
           ]}
           onChange={(options: string[]) => setSeasons(options)}
         ></MultiSelect>
@@ -106,7 +105,6 @@ const GamesForm = ({ onSubmit }: Props) => {
             </div>
           </div>
         )}
-        <OPIModal />
       </form>
     </section>
   );

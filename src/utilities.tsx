@@ -23,7 +23,8 @@ function computeURL(
   }
   if (seasons.length > 0 && seasons[0] != "") {
     for (const szn of seasons) {
-      url += "&season=" + szn;
+      let temp = Number(szn) - 1;
+      url += "&season=" + temp;
     }
   }
   if (filters.length > 0) {

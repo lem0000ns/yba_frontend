@@ -5,7 +5,6 @@ import {
   InputForm,
   Modal,
   Input_Tags,
-  OPIModal,
 } from "../components/All";
 
 let teamAbbreviations = [
@@ -147,7 +146,6 @@ const RankForm = ({ onSubmit }: Props) => {
         <MultiSelect
           text="Select a season or range of seasons (optional)"
           options={[
-            "2015",
             "2016",
             "2017",
             "2018",
@@ -156,6 +154,7 @@ const RankForm = ({ onSubmit }: Props) => {
             "2021",
             "2022",
             "2023",
+            "2024",
           ]}
           onChange={(options: string[]) => setSeasons(options)}
         ></MultiSelect>
@@ -214,7 +213,6 @@ const RankForm = ({ onSubmit }: Props) => {
             </div>
           </div>
         )}
-        <OPIModal />
       </form>
     </section>
   );
