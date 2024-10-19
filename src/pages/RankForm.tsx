@@ -7,7 +7,7 @@ import {
   Input_Tags,
 } from "../components/All";
 
-let teamAbbreviations = [
+const teamAbbreviations = [
   "ATL",
   "BOS",
   "BKN",
@@ -45,7 +45,7 @@ interface Props {
     agg: string,
     stat: string,
     order: string,
-    limit: Number,
+    limit: number,
     team: string,
     seasons: string[],
     stage: string,

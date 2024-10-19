@@ -27,9 +27,8 @@ const GamesForm = ({ onSubmit }: Props) => {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    limit == -1
-      ? setError("'Number of games' is a required field")
-      : onSubmit(nameValue, seasons, filters, limit);
+    if (limit == -1) setError("'Number of games' is a required field");
+    else onSubmit(nameValue, seasons, filters, limit);
   };
 
   return (
