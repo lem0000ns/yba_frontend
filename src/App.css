@@ -264,6 +264,7 @@ nav {
   padding: 2.5rem;
   height: 32px;
   position: sticky;
+  width: 100%;
 }
 
 nav ul {

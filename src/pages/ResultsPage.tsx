@@ -79,7 +79,12 @@ const ResultsPage = ({ path }: Props) => {
       <img
         src={`https://d2qd9wn47agcqj.cloudfront.net/allPlayerImages/${name}.jpg`}
         alt={`Image of ${name}`}
-        style={{ width: "20%", height: "auto" }} // Example dimensions
+        style={{
+          width: "20%",
+          height: "auto",
+          borderRadius: "10%",
+          border: "2px solid rgb(181, 117, 237)",
+        }} // Example dimensions
         className="image"
         onError={() => setPlayer(false)}
       />
