@@ -147,7 +147,7 @@ td {
 
 .player-profile-image-container {
   display: flex;
-  justify-content: right;
+  justify-content: center;
   align-items: center;
   width: 50%;
   height: 75%;
@@ -156,15 +156,17 @@ td {
 .basicInfo-image-container {
   display: flex;
   justify-content: center;
-  align-items: center
+  align-items: center;
+  margin-top: 4rem;
 }
 
 .player-profile-image {
-  width: 400px;
+  width: 60%;
   height: auto;
   object-fit: cover;
-  box-shadow: 1px -1px 3px rgb(181, 117, 237);
   padding: 5px;
+  border: 2px solid rgb(181, 117, 237); /* Adjust color and width as needed */
+  border-radius: 20%; /* This makes it a circle, adjust value for rounded corners */
 }
 
 .autocomplete-wrapper {
@@ -337,6 +339,15 @@ nav .menu:hover {
       width: 100%;
       text-align: center;
   }
+
+  .basicInfo-image-container {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 2rem;
+  }
 }
 
 nav ul li a {
@@ -482,19 +493,19 @@ ol, ul, dl {
 /* Player profile */
 
 .player-profile-container {
-  margin-left: 80px;
-  margin-right: 80px;
-  margin-top: 20px;
+  margin-left: 2rem;
+  margin-right: 2rem;
+  margin-top: 1rem;
   color: white
 }
 
 .player-profile-basicInfo {
-  text-align: left;
-  max-width: 50%
-}
-
-.player-profile-teams{
-  margin-top: 20px;
+  text-align: center;
+  width: 50%;
+  border: 1px solid white;
+  padding: 0.5rem;
+  border-radius: 10%;
+  background-color: rgba(0, 0, 0, 0.5)
 }
 
 .player-profile-intro {

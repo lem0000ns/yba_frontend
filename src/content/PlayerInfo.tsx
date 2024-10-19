@@ -94,16 +94,21 @@ const PlayerInfo = () => {
           <h5 className="player-profile-career">{info.career}</h5>
         </div>
 
-        <div className="player-profile-image-container">{player}</div>
+        <div
+          className="player-profile-image-container"
+          style={{ width: "50%" }}
+        >
+          {player}
+        </div>
       </div>
 
       <div className="player-profile-teamsAwards">
-        <h5 className="player-profile-label" style={{ marginTop: "20px" }}>
+        <h5 className="player-profile-label" style={{ marginTop: "2.5rem" }}>
           Playing history:
         </h5>
         <h5 className="player-profile-teams">{info.teams}</h5>
 
-        <h5 className="player-profile-label" style={{ marginTop: "20px" }}>
+        <h5 className="player-profile-label" style={{ marginTop: "2rem" }}>
           Awards:{" "}
         </h5>
         <h5 className="player-profile-awards">{info.awards}</h5>
