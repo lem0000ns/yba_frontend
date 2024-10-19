@@ -11,17 +11,23 @@ const HomePage = () => {
   return (
     <div className="homepage">
       <div className="homepage-title">
-        <h1 style={{ fontWeight: "bold" }}>You've made it to the YangBA!</h1>
-        <h2 style={{ opacity: "0.6" }}>
-          Begin by choosing one of the three paths above
+        <h1
+          style={{
+            fontWeight: "bold",
+            marginLeft: "2rem",
+            marginRight: "2rem",
+          }}
+        >
+          You've made it to the YangBA!
+        </h1>
+        <h2 style={{ opacity: "0.6", marginLeft: "2rem", marginRight: "2rem" }}>
+          Begin by choosing one of the three options above
         </h2>
       </div>
-      <div style={{ marginTop: "100px" }}>
+      <div style={{ marginTop: "3rem" }}>
         <h2 style={{ opacity: "0.8" }}>Learn More:</h2>
       </div>
-      <div className="homepage-accordion">
-        <Accordion />
-      </div>
+      <Accordion />
       <div className="see-examples-button" onClick={handleExamplesClick}>
         I need inspiration{" "}
         <FontAwesomeIcon icon={faRightToBracket}></FontAwesomeIcon>

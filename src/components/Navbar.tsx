@@ -11,58 +11,67 @@ const Navbar = () => {
   const allNames = namesList.split("\n");
   const [nameValue, setNameValue] = useState("");
   const navigate = useNavigate();
+  const [menuOpen, setMenuOpen] = useState(false);
 
-  const handleSearch = (e: any) => {
+  const handleSearch = (e: unknown) => {
     console.log(e);
-    nameValue == ""
-      ? navigate("/")
-      : navigate(`/players/${encodeURIComponent(nameValue)}`);
+    if (nameValue == "") navigate("/");
+    else navigate(`/players/${encodeURIComponent(nameValue)}`);
   };
 
   return (
-    <header>
+    <nav>
       <a href="/">
         <h1 className="YangBA-header">YangBA</h1>
       </a>
-      <nav>
-        <ul className="nav_links">
-          <li>
-            <a
-              className="nav_links_items"
-              href="/stats"
-              data-tooltip-id="my-tooltip-inline"
-              data-tooltip-content="View an individual stat from your favorite player!"
-            >
-              Stats
-            </a>
-          </li>
-          <li>
-            <a
-              className="nav_links_items"
-              href="/games"
-              data-tooltip-id="my-tooltip-inline"
-              data-tooltip-content="Per-game statlines tailored to your choice!"
-            >
-              Games
-            </a>
-          </li>
-          <li>
-            <a
-              className="nav_links_items"
-              href="/rank"
-              data-tooltip-id="my-tooltip-inline"
-              data-tooltip-content="Choose how to rank the best (or worst) players!"
-            >
-              Rank
-            </a>
-          </li>
-        </ul>
-        <Tooltip
-          id="my-tooltip-inline"
-          style={{ backgroundColor: "rgb(179, 255, 179)", color: "#111" }}
-          place="bottom"
-        />
-      </nav>
+      <div
+        className="menu"
+        onClick={() => {
+          setMenuOpen(!menuOpen);
+          console.log(menuOpen);
+        }}
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <ul className={menuOpen ? "open" : "test"}>
+        <li>
+          <a
+            className="nav_links_items"
+            href="/stats"
+            data-tooltip-id="my-tooltip-inline"
+            data-tooltip-content="Specific performance stats"
+          >
+            Stats
+          </a>
+        </li>
+        <li>
+          <a
+            className="nav_links_items"
+            href="/games"
+            data-tooltip-id="my-tooltip-inline"
+            data-tooltip-content="Per-game statlines"
+          >
+            Games
+          </a>
+        </li>
+        <li>
+          <a
+            className="nav_links_items"
+            href="/rank"
+            data-tooltip-id="my-tooltip-inline"
+            data-tooltip-content="Custom ranking system"
+          >
+            Rank
+          </a>
+        </li>
+      </ul>
+      <Tooltip
+        id="my-tooltip-inline"
+        style={{ backgroundColor: "rgb(179, 255, 179)", color: "#111" }}
+        place={menuOpen ? "top" : "bottom"}
+      />
       <form className="d-flex" role="search" onSubmit={(e) => handleSearch(e)}>
         <div className="search-container">
           <Autocomplete
@@ -76,7 +85,7 @@ const Navbar = () => {
           </button>
         </div>
       </form>
-    </header>
+    </nav>
   );
 };
 

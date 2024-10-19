@@ -251,13 +251,52 @@ li, a, button {
   text-decoration: none !important
 }
 
-header {
+nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 40px;
   background: linear-gradient(35deg, rgb(26, 3, 51), rgb(116, 72, 186));
+  padding: 2.5rem;
   height: 32px;
+  position: sticky;
+}
+
+nav ul {
+  display: flex;
+}
+
+nav ul li {
+ list-style: none; 
+}
+
+nav ul li a {
+  display: block;
+  text-decoration: none;
+  padding: 0.5rem;
+  margin: 0 0.5rem;
+  border-radius: 0.5rem;
+}
+
+nav .menu {
+  display: none;
+  position: absolute;
+  top: 2.5rem;
+  right: 2rem;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 2.25rem;
+  height: 2rem;
+}
+
+nav .menu span {
+  height: 0.4rem;
+  width: 100%;
+  background-color: #fff;
+  border-radius: 0.2rem;
+}
+
+nav .menu:hover {
+  cursor: pointer
 }
 
 
@@ -266,12 +305,49 @@ header {
   color:rgb(250, 250, 250);
 }
 
-.nav_links {
-  list-style: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-left: 35px
+@media (max-width: 800px) {
+  nav .nav_links {
+    display: none; /* Hide nav links on small screens */
+  }
+  
+  nav .menu {
+    display: flex; /* Show the menu icon on small screens */
+  }
+
+  nav {
+      flex-direction: column;
+      height: auto;
+  }
+
+  nav ul {
+      display: none; /* Initially hide the menu items */
+      flex-direction: row;
+      width: 100%;
+      list-style: none;
+  }
+
+  nav ul.open {
+      display: flex; /* Show menu items when 'open' class is added */
+  }
+
+  nav ul li {
+      width: 100%;
+      text-align: center;
+  }
+}
+
+nav ul li a {
+  margin: 0.2rem 0.5rem;
+  transition: all 0.3s ease 0s;
+}
+
+nav ul li a:hover {
+color: #14ce6d;
+}
+
+ol, ul, dl {
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 .nav_links li {
@@ -279,14 +355,6 @@ header {
   padding: 0px 20px;
   margin-top: 10px;
   position: relative;
-}
-
-.nav_links li a {
-  transition: all 0.3s ease 0s;
-}
-
-.nav_links li a:hover {
-  color: #14ce6d
 }
 
 .nav_links_items {
