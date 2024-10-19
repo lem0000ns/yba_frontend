@@ -94,9 +94,7 @@ const PlayerInfo = () => {
           <h5 className="player-profile-career">{info.career}</h5>
         </div>
 
-        <div className="player-profile-image-container">
-          <div>{player}</div>
-        </div>
+        <div className="player-profile-image-container">{player}</div>
       </div>
 
       <div className="player-profile-teamsAwards">

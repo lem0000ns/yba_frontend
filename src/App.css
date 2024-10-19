@@ -149,7 +149,8 @@ td {
   display: flex;
   justify-content: right;
   align-items: center;
-  margin-left: 200px;
+  width: 50%;
+  height: 75%;
 }
 
 .basicInfo-image-container {
